@@ -1,20 +1,97 @@
 aid: santeacademie
 name: Santé Académie
-description: 'Santé Académie is a company surfaced as a portfolio company of serena and added to the API
-  Evangelist network as a stub for enrichment. Sector: edtech. This profile is a lead awaiting the enrichment
-  pipeline.'
+description: >-
+  Santé Académie is a French continuing-professional-development (DPC) training provider for healthcare
+  professionals — physicians, nurses, pharmacists, pharmacy technicians, nursing assistants and health-facility
+  training managers — delivering e-learning, virtual classrooms and in-person courses funded through ANDPC, FIF-PL,
+  FAF-PM, ANFH and OPCO schemes. The company is Qualiopi-certified, registered with France Compétences and approved
+  by the Agence Nationale du DPC, and says more than 35,000 healthcare professionals have trained on its platform.
+  Its public technical surface is a pair of unauthenticated read-only catalog APIs served from
+  frontstage.santeacademie.com — the API Platform "Frontstage API" and a swagger-php "Connector API" — which expose
+  the training catalog (topics, resources, courses, trainers, funding schemes, professions/métiers, FAQs,
+  testimonials, pharmacy and health-facility lookup) that powers its own websites and learner app.
+image: https://www.santeacademie.com/favicon.ico
 url: https://raw.githubusercontent.com/api-evangelist/santeacademie/refs/heads/main/apis.yml
 x-type: company
 x-source: serena-portfolio
-x-tier: stub
-x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-08-17'
 modified: '2026-08-17'
 tags:
 - Company
 - Edtech
-apis: []
+- healthcare-training
+- continuing-education
+- dpc
+- e-learning
+- france
+- healthcare-professionals
+- course-catalog
+- lms
+apis:
+- name: Santé Académie Frontstage API
+  description: >-
+    Read-only JSON catalog API built on API Platform (Symfony) that backs the santeacademie.com websites and the
+    play.santeacademie.com learner app. Ten GET operations cover training-topic and resource search with faceted
+    filters, per-slug topic/resource/custom-catalog lookup, the profession (métier) list, and topic counts by
+    B2C/B2B space. Served unauthenticated; collections use an elements/currentPage/lastPage/itemsPerPage/totalItems
+    envelope and errors are returned as application/problem+json.
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - course-catalog
+  - healthcare-training
+  - dpc
+  - continuing-education
+  - france
+  - search
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-frontstage-openapi.json
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Overlay
+    url: overlays/santeacademie-frontstage-overlay.yaml
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- name: Santé Académie Connector API
+  description: >-
+    Read-only JSON "connector" API generated with swagger-php on the same frontstage host, used by the marketing
+    site and funding simulator. Fourteen GET operations cover article and topic search, per-slug article, topic,
+    resource and custom-catalog lookup, the FAQ, testimonial, profession, job-space and media-category lists, a
+    sitemap feed, and pharmacy / health-facility search. Served unauthenticated; errors are returned as a bare JSON
+    string rather than problem+json.
+  humanURL: https://frontstage.santeacademie.com/connector/api/
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - course-catalog
+  - healthcare-training
+  - content-api
+  - search
+  - france
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-connector-openapi.json
+  - type: Overlay
+    url: overlays/santeacademie-connector-overlay.yaml
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -22,4 +99,142 @@ maintainers:
   email: info@apis.io
 common:
 - type: Website
-  url: http://www.santeacademie.com/
+  url: https://www.santeacademie.com/
+- type: Login
+  url: https://play.santeacademie.com/
+- type: Support
+  url: https://support.santeacademie.com/fr/
+- type: HelpCenter
+  url: https://support.santeacademie.com/fr/
+- type: Blog
+  url: https://www.santeacademie.com/media
+- type: GitHubOrganization
+  url: https://github.com/santeacademie
+- type: TermsOfService
+  url: https://www.notion.so/CGU-V-de-Sant-Acad-mie-b4730d8bf25b47bca95d0e3b2c40ba08
+- type: PrivacyPolicy
+  url: https://www.notion.so/santeacademie/Politique-de-confidentialit-af621df7e4be4f4182e0879851735568
+- type: StatusPage
+  url: https://status.santeacademie.com/
+- type: Lifecycle
+  url: lifecycle/santeacademie-lifecycle.yml
+- type: Authentication
+  url: authentication/santeacademie-authentication.yml
+- type: Conventions
+  url: conventions/santeacademie-conventions.yml
+- type: Conformance
+  url: conformance/santeacademie-conformance.yml
+- type: Compliance
+  url: conformance/santeacademie-conformance.yml
+- type: ErrorCatalog
+  url: errors/santeacademie-problem-types.yml
+- type: DataModel
+  url: data-model/santeacademie-data-model.yml
+- type: DomainSecurity
+  url: security/santeacademie-domain-security.yml
+- type: Packages
+  url: packages/santeacademie-packages.yml
+- type: LLMsTxt
+  url: llms/santeacademie-llms.txt
+- type: MCPServer
+  url: mcp/santeacademie-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/santeacademie-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/santeacademie-rate-limits.yml
+x-enrichment:
+  date: '2026-08-17'
+  status: enriched
+  artifacts_added: 24
+  pass: local-v1
+x-coverage:
+  state: covered
+  reason: null
+  detail: >-
+    Two live, public, unauthenticated OpenAPI documents were found on the company's own API host and saved verbatim,
+    plus a first-party status page and a real GitHub organization. Nothing about this provider is thin.
+  checked: '2026-08-17'
+x-contract-discovery:
+  note: >-
+    Recorded because the win here was NOT obvious and a second pass should not have to repeat it. The company has no
+    developer portal, no /api path on its website, and 404s every canonical spec path on www.santeacademie.com. The
+    contract was found by reading play.santeacademie.com's own JavaScript bundle, which named three internal API hosts,
+    and then probing the API Platform / swagger-php default doc paths on each.
+  hosts_found_in_app_bundle:
+  - https://frontstage.santeacademie.com/connector/api
+  - https://contentstudio.santeacademie.com/api
+  - https://crossguard.santeacademie.com
+  hosts_found_on_status_page:
+  - frontstage
+  - frontstage-meilisearch
+  - contentstudio
+  - contentplayer-web
+  - crossguard-server
+  - backstage
+  - omnisearch
+  - copilot
+  - landing-gateway
+  - spotlight
+  - argocd-server
+  - n8n
+  winning_paths:
+  - url: https://frontstage.santeacademie.com/api/docs.jsonopenapi
+    status: 200
+    content_type: application/vnd.openapi+json
+    bytes: 35397
+    result: OpenAPI 3.1.0, "Frontstage API", 10 paths
+  - url: https://frontstage.santeacademie.com/connector/api/
+    status: 200
+    content_type: application/json
+    bytes: 63774
+    result: OpenAPI 3.0.0, 14 operations with operationIds
+  ownership_check:
+    verdict: pass
+    reasoning: >-
+      Neither spec carries a contact or termsOfService to check, and both name a host only implicitly, so ownership was
+      established on the payload and the domain rather than on the fetch URL alone. Both documents are served from
+      frontstage.santeacademie.com, a subdomain of the company's own domain; the schema vocabulary is unmistakably this
+      company's business (CourseRepresentation, JobRepresentation for French healthcare métiers, FundingRepresentation
+      for DPC/FIF-PL schemes, TrainerRepresentation, CustomCatalog); the API Platform resource namespaces are
+      App\Catalog\Entity\Topic, App\External\Entity\Job, App\Market\Entity\Resource and App\Market\Entity\CustomCatalog;
+      a live anonymous GET /api/jobs returned French profession records (MED/Médecin, appellation "Médecin
+      généraliste"); the host is named in Santé Académie's own status page as the service `frontstage`; and
+      play.santeacademie.com's production bundle calls this exact host. No sibling or third-party brand appears
+      anywhere in either document.
+  gated_or_empty:
+  - url: https://contentstudio.santeacademie.com/api/docs.jsonopenapi
+    status: 401
+  - url: https://backstage.santeacademie.com/api
+    status: 401
+  - url: https://crossguard.santeacademie.com/api
+    status: 404
+  - url: https://frontstage.santeacademie.com/api/graphql
+    status: 404
+  - url: https://frontstage.santeacademie.com/.well-known/agent-card.json
+    status: 404
+x-artifact-notes:
+  no_wellknown_pointer: >-
+    well-known/santeacademie-well-known.yml is written but NO WellKnown or SecurityTxt pointer is emitted. Every
+    canonical /.well-known/ path 404s on www, frontstage, play and simulateur. The one 200 is Intercom's own vendor
+    security.txt on the CNAME'd help-center host (Canonical: app.intercom.com), which is not Santé Académie's.
+  no_sdks_pointer: >-
+    packages/santeacademie-packages.yml is written but NO SDKs pointer is emitted. sdk_count is 0 — the two
+    first-party Packagist packages are general-purpose Symfony tooling, not clients for these APIs.
+  no_idempotency_pointer: >-
+    All 24 published operations are GET. Idempotency is inherent, not a provider feature, so no Idempotency pointer.
+  no_security_pointer: >-
+    probe-security-programs.py returned vdp=none trust=none. No first-party security.txt, no bug bounty, no trust
+    center, no named security certification.
+  no_deprecation_pointer: >-
+    No deprecation policy, no Sunset/Deprecation headers, no versioning a caller can pin.
+  no_agentcard_pointer: >-
+    /.well-known/agent-card.json and the legacy /.well-known/agent.json returned 404 on all five hosts. No card was
+    authored on the provider's behalf.
+  no_asyncapi_or_webhooks_pointer: >-
+    No event, streaming or webhook surface exists. Nothing fabricated.
+  compliance_pointer_scope: >-
+    The Compliance pointer is emitted for Qualiopi and ODPC/ANDPC accreditation — real, published, nationally
+    verifiable certification marks served from the company's own domain. It is NOT an information-security claim:
+    no SOC 2, ISO 27001 or HDS attestation is published, and the conformance artifact says so explicitly.

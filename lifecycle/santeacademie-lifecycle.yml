@@ -1,0 +1,132 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://status.santeacademie.com/ (probed 200) + https://www.santeacademie.com/ +
+  openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json + live response headers
+note: >-
+  method: searched because the status page is a real, first-party, publicly reachable operational surface that was
+  found and read. Everything else in this file is an honest absence: Santé Académie publishes no versioning policy,
+  no deprecation policy, no SLA, no changelog and no roadmap.
+status_page:
+  published: true
+  url: https://status.santeacademie.com/
+  http_status: 200
+  host: status.santeacademie.com
+  first_party: true
+  ownership_note: >-
+    Santé Académie's own subdomain (CNAME to cname.upbot.app), branded "Santé Académie", hosted on Upbot. The
+    subdomain and the branding are the company's; only the monitoring platform is a vendor.
+  provider: Upbot
+  headline_state_observed: All Systems Operational
+  window_observed: 2026-05-20 to 2026-08-17
+  components_listed:
+  - name: frontstage
+    uptime_90d: '100%'
+    note: the service that answers BOTH public APIs in this repo
+  - name: frontstage-meilisearch
+    uptime_90d: '100%'
+  - name: contentstudio
+    uptime_90d: '99.99%'
+  - name: contentplayer-web
+    uptime_90d: '100%'
+  - name: crossguard-server
+    uptime_90d: '100%'
+  - name: backstage
+    uptime_90d: '99.98%'
+  - name: omnisearch
+    uptime_90d: '100%'
+  - name: copilot
+    uptime_90d: '99.99%'
+  - name: landing-gateway
+    uptime_90d: '99.99%'
+  - name: spotlight
+    uptime_90d: '100%'
+  - name: argocd-server
+    uptime_90d: '100%'
+  - name: n8n
+    uptime_90d: '99.94%'
+  incident_history: 'available via the page''s "View history" control'
+  machine_readable_feed:
+    published: false
+    note: >-
+      No RSS/Atom/JSON status feed and no /api/v2/status.json-style endpoint was found. An agent cannot subscribe to
+      Santé Académie's operational state; it can only scrape the HTML page.
+  finding: >-
+    This is the strongest published operational artifact Santé Académie has. It is unusual and genuinely useful: the
+    company exposes per-service uptime for twelve named internal services, including the exact service (`frontstage`)
+    that serves the two public APIs profiled here. It also confirmed the service inventory used during contract
+    discovery.
+versioning:
+  policy_published: false
+  strategy: none
+  in_path: false
+  in_header: false
+  in_media_type: false
+  declared_versions:
+    frontstage_api: 1.0.0
+    connector_api: '1.0'
+  runtime_signal:
+    header: x-version-id
+    example_observed: v134
+    pinnable: false
+    note: >-
+      Informational deploy id only. A caller cannot request v133, and there is no record anywhere public of what
+      changed between builds.
+  detail: >-
+    Neither public API is versioned in any way a consumer can act on. `info.version` is a static string that has no
+    published history. A breaking change would arrive silently.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594_conformant: false
+  deprecated_operations: []
+  deprecated_schemas: []
+  spec_signal:
+    note: >-
+      Both specifications DO carry a `deprecated` flag on schemas and operations — API Platform and swagger-php emit
+      it by default — and every one of them is currently `false`. So the mechanism to signal deprecation exists in the
+      generated documents and has never been used. There is no policy text, no Sunset/Deprecation response header,
+      and no notice period.
+  detail: >-
+    No deprecation policy exists. Combined with the absence of versioning, a consumer of these APIs has no warning
+    mechanism of any kind.
+sla:
+  published: false
+  detail: >-
+    No SLA, uptime commitment or support-response target is published for the APIs. The status page reports
+    historical uptime but makes no forward commitment. Learner-facing service commitments, if any, live in the CGU-V
+    (https://www.notion.so/CGU-V-de-Sant-Acad-mie-b4730d8bf25b47bca95d0e3b2c40ba08) and are consumer terms, not an
+    API SLA.
+changelog:
+  published: false
+  detail: >-
+    No dated changelog, release-notes page or GitHub releases feed for either API. The company's public GitHub org has
+    14 repositories of general engineering tooling but nothing that tracks these APIs.
+  probed:
+  - url: https://www.santeacademie.com/blog
+    status: 404
+  - url: https://www.santeacademie.com/media
+    status: 200
+    note: an editorial content hub for healthcare professionals, not a product or API changelog
+roadmap:
+  published: false
+support:
+  channel: help center
+  url: https://support.santeacademie.com/fr/
+  http_status: 200
+  note: >-
+    Intercom-hosted learner support in French. Not a developer support channel — there is no developer contact,
+    no API support address and no issue tracker. The GitHub org lists tech@santeacademie.com in its profile.
+  developer_channel_published: false
+  github_org_contact: tech@santeacademie.com
+recommendations:
+- >-
+  Publish a machine-readable status feed. The status page already tracks `frontstage` per-service; a JSON or Atom
+  endpoint would make that state consumable by the systems that actually call the API.
+- >-
+  Version the two public APIs, or state plainly that they are internal. Right now there is no version to pin, no
+  changelog to read and no deprecation notice to receive.
+- >-
+  Adopt RFC 8594 Sunset/Deprecation headers before the first breaking change, not after. The `deprecated` field is
+  already present in both generated documents and costs nothing to start using.

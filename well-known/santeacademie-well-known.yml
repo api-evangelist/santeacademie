@@ -1,0 +1,131 @@
+generated: '2026-08-17'
+method: probed
+source: live GET probes of every santeacademie.com host named in apis.yml, the OpenAPI servers/fetch host, and the docs host
+note: >-
+  Santé Académie serves NO first-party /.well-known/ document on any host we could reach. Every canonical path
+  404s on www.santeacademie.com, frontstage.santeacademie.com (the API host), play.santeacademie.com (the learner
+  app) and simulateur.santeacademie.com. The ONE 200 in this probe —
+  https://support.santeacademie.com/.well-known/security.txt — is INTERCOM's own vendor file, not Santé Académie's:
+  its body reads "# Intercom - reporting security vulnerabilities to Intercom", contacts
+  security@intercom.com / bugcrowd.com/intercom, and declares Canonical: https://app.intercom.com/.well-known/security.txt.
+  support.santeacademie.com is a CNAME'd Intercom-hosted help center (server headers carry x-intercom-version),
+  so that document belongs to the SaaS vendor and is deliberately NOT saved here and NOT credited to Santé
+  Académie. No WellKnown or SecurityTxt pointer is emitted from this file for the same reason: this artifact
+  records an absence, and an absence must not be published as a presence.
+hosts:
+- host: www.santeacademie.com
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/api-catalog
+    status: 404
+    file: null
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+  - path: /robots.txt
+    status: 200
+    file: null
+    note: served (104 bytes, disallows /register/ and /c-job/, points at /sitemap.xml) — not a well-known document
+- host: frontstage.santeacademie.com
+  note: the OpenAPI host for both public APIs
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+  - path: /robots.txt
+    status: 404
+    file: null
+- host: play.santeacademie.com
+  note: learner application (Next.js SPA)
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/openid-configuration
+    status: 404
+    file: null
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+- host: simulateur.santeacademie.com
+  note: funding simulator
+  paths:
+  - path: /.well-known/security.txt
+    status: 404
+    file: null
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 404
+    file: null
+- host: support.santeacademie.com
+  note: Intercom-hosted help center (CNAME to Intercom; x-intercom-version response header)
+  paths:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    owner: intercom
+    excluded: true
+    reason: >-
+      Vendor document. Canonical points at https://app.intercom.com/.well-known/security.txt and the contacts are
+      security@intercom.com and bugcrowd.com/intercom. Not Santé Académie's disclosure program.
+  - path: /.well-known/agent-card.json
+    status: 404
+    file: null
+  - path: /.well-known/agent.json
+    status: 404
+    file: null
+  - path: /llms.txt
+    status: 200
+    file: ../llms/santeacademie-support-llms.txt
+    owner: santeacademie
+    note: >-
+      Intercom auto-generates an llms.txt index for every hosted help center, but the CONTENT is Santé Académie's
+      own 25 French support articles on its own subdomain, so the body is saved verbatim under llms/.
+summary:
+  hosts_probed: 5
+  paths_probed: 33
+  first_party_documents: 1
+  first_party_document_note: the help-center llms.txt only; zero first-party /.well-known/ documents
+  vendor_documents_excluded: 1
+  wellknown_pointer_emitted: false
+  securitytxt_pointer_emitted: false

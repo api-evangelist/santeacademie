@@ -1,0 +1,71 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://www.santeacademie.com/ + https://www.santeacademie.com/formation/liberal (200) +
+  https://simulateur.santeacademie.com/ (200) + probes of /tarifs (404) and /prix (404)
+plan_count: 0
+api_plans:
+  published: false
+  detail: >-
+    There is no API pricing of any kind. Santé Académie runs no developer program, publishes no API plans, no free
+    tier, no quota and no paid tier. The two public catalog APIs profiled in this repo are simply open — they require
+    no account, no key and no payment, and no terms govern their use. That is not a "free plan"; it is an unpriced,
+    ungoverned surface.
+product_pricing:
+  published: false
+  model: third-party-funded
+  detail: >-
+    The company also publishes no list price for its actual product. Training for self-employed healthcare
+    professionals is described as "100% pris en charge DPC, FIF-PL, FAF-PM et indemnisées" — fully paid by the national
+    funding scheme, with an indemnity paid TO the professional for time spent. The learner therefore sees no price at
+    all, which is why no pricing page exists to record.
+  funding_schemes:
+  - code: ANDPC
+    name: Agence Nationale du Développement Professionnel Continu
+    note: annual per-profession hour allowances ("forfaits DPC"), reset each year
+  - code: FIF-PL
+    name: Fonds Interprofessionnel de Formation des Professionnels Libéraux
+  - code: FAF-PM
+    name: Fonds d'Assurance Formation de la Profession Médicale
+  - code: ANFH
+    name: Association Nationale pour la Formation permanente du personnel Hospitalier
+  - code: OPCO
+    name: Opérateurs de compétences (employer-side funding)
+  quote_path:
+    simulator:
+      url: https://simulateur.santeacademie.com/
+      http_status: 200
+      note: >-
+        A funding simulator, not a price calculator. It estimates which schemes a given profession is eligible for and
+        how much is covered. Its robots.txt disallows /financements/, /idel/, /medecin-generaliste/, /pharmacien/ and
+        /preparateur-en-pharmacie/, so the per-profession funding pages are deliberately excluded from crawling.
+    b2b:
+      note: >-
+        Establishment and CPTS/MSP training is sold through the /formation/drh and /formation/cpts paths with no
+        published price; the B2B path is a contact/quote motion. Custom catalogs are provisioned per customer (the
+        CustomCatalog entity carries an externalOrganizationId), which confirms per-account commercial terms rather
+        than published tiers.
+  machine_readable_pricing:
+    published: false
+    but_present_in_api: true
+    detail: >-
+      Worth recording precisely because it inverts the usual finding: the price IS machine-readable, it is just not
+      published as pricing. The Product object embedded in GET /api/topics/{slug} carries `price`, `compensation`,
+      `courseCode`, `jobCode` and `fundingCode` — the per-course, per-profession, per-scheme amount and the
+      professional's indemnity — and it is returned publicly, unauthenticated, to anyone who calls the catalog API.
+      See data-model/santeacademie-data-model.yml (entity Product).
+plans: []
+probed:
+- url: https://www.santeacademie.com/tarifs
+  status: 404
+- url: https://www.santeacademie.com/prix
+  status: 404
+- url: https://www.santeacademie.com/formation/liberal
+  status: 200
+  note: '"100% pris en charge DPC, FIF-PL, FAF-PM et indemnisées"; no amount shown'
+- url: https://simulateur.santeacademie.com/
+  status: 200
+note: >-
+  method: searched — the pricing surface was located and read; plan_count is 0 because the provider genuinely
+  publishes no plans, not because nothing was found. Recorded rather than omitted so the zero is legible as a
+  measurement.

@@ -1,0 +1,76 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json + live anonymous
+  probes of frontstage/contentstudio/backstage/crossguard.santeacademie.com on 2026-08-17
+note: >-
+  Ran 0-working/derive-authentication.py first; it wrote nothing because neither specification declares a single
+  securityScheme. That is not a thin spec — it is the finding. Both public APIs are genuinely open: they require no
+  credential and returned 200 to anonymous GETs. There is no documented auth page to upgrade this from, because
+  Santé Académie publishes no developer documentation of any kind.
+summary:
+  schemes_declared: 0
+  public_apis_requiring_credentials: 0
+  oauth2: false
+  openid_connect: false
+  api_key: false
+  http_bearer: false
+  mutual_tls: false
+  posture: open-read-only
+apis:
+- api: Santé Académie Frontstage API
+  spec: openapi/santeacademie-frontstage-openapi.json
+  security_schemes: []
+  root_security: absent
+  effective: none
+  verified:
+    method: probed
+    url: https://frontstage.santeacademie.com/api/jobs
+    http_status: 200
+    sent_credentials: false
+    note: returned the live French profession list (MED/Médecin …) with no Authorization header
+- api: Santé Académie Connector API
+  spec: openapi/santeacademie-connector-openapi.json
+  security_schemes: []
+  root_security: absent
+  effective: none
+  verified:
+    method: probed
+    url: https://frontstage.santeacademie.com/connector/api/faq
+    http_status: 200
+    sent_credentials: false
+    note: returned live published FAQ records with no Authorization header
+gated_surfaces:
+  note: >-
+    Recorded for completeness — these are Santé Académie's internal services on the same domain. They are NOT part
+    of the public API surface and nothing in this repo is derived from them. They are listed so a reader can see
+    that the open posture above is a deliberate split between a public catalog and gated back-office systems, not an
+    oversight across the whole estate.
+  surfaces:
+  - host: contentstudio.santeacademie.com
+    url: https://contentstudio.santeacademie.com/api/docs
+    http_status: 401
+    body: '{"type":"...rfc2616#section-10","title":"An error occurred","detail":"Full authentication is required to access this resource."}'
+    wall: session login (302 from / to /login); robots.txt disallows everything
+  - host: backstage.santeacademie.com
+    url: https://backstage.santeacademie.com/api
+    http_status: 401
+    wall: session login (302 from / to /login)
+  - host: crossguard.santeacademie.com
+    url: https://crossguard.santeacademie.com/api
+    http_status: 404
+    wall: no API route exposed; / 302s to /login
+account_auth:
+  note: >-
+    Learner sign-in is a first-party session login at https://play.santeacademie.com/. No OAuth authorization server,
+    no OpenID Connect discovery document and no SSO metadata is published — /.well-known/openid-configuration and
+    /.well-known/oauth-authorization-server 404 on every host (see well-known/santeacademie-well-known.yml).
+recommendations:
+- >-
+  Declare the open posture explicitly in the specifications. An empty securitySchemes reads to a generator as
+  "unknown", not "public"; an explicit `security: []` at the document root says "no credential required" and lets a
+  client library skip auth setup instead of guessing.
+- >-
+  If the catalog APIs are meant to be public, publish them: a base URL, a rate-limit statement and a terms-of-use
+  line are the difference between an internal endpoint anyone can find and an API a partner can build on. If they
+  are NOT meant to be public, they are currently readable by anyone, unauthenticated, from any network.

@@ -1,0 +1,1813 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "api",
+    "description": "api description",
+    "version": "1.0"
+  },
+  "paths": {
+    "/connector/api/article/{slug}": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "description": "Return the JSON containing article search",
+        "operationId": "findArticle",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Slug of the Article on Frontstage",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Article"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/custom-catalog/{slug}": {
+      "get": {
+        "tags": [
+          "CustomCatalog"
+        ],
+        "description": "Return the JSON containing custom catalog search",
+        "operationId": "findCustomCatalog",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Slug of the Custom Catalog on Frontstage",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CustomCatalog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/faq": {
+      "get": {
+        "tags": [
+          "Faq"
+        ],
+        "description": "Return the JSON containing faqs list",
+        "operationId": "listFaq",
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Faq"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/health-facility/search": {
+      "get": {
+        "tags": [
+          "Health Facility"
+        ],
+        "description": "Return the JSON containing health facility search",
+        "operationId": "searchHealthFacility",
+        "parameters": [
+          {
+            "name": "HealthFacilitySearchQuery",
+            "in": "query",
+            "description": "Query to search for health facilities",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/HealthFacilitySearchQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthFacilitySearchResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/job": {
+      "get": {
+        "tags": [
+          "Job"
+        ],
+        "description": "Return the JSON containing jobs list",
+        "operationId": "listJob",
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Job"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/job/space": {
+      "get": {
+        "tags": [
+          "JobSpace"
+        ],
+        "description": "Return the JSON containing jobs spaces list",
+        "operationId": "listJobSpaces",
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/JobSpace"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/media/category": {
+      "get": {
+        "tags": [
+          "MediaCategory"
+        ],
+        "description": "Return the JSON containing media category list",
+        "operationId": "listMediaCategory",
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MediaCategory"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/pharmacy/search": {
+      "get": {
+        "tags": [
+          "Pharmacy"
+        ],
+        "description": "Return the JSON containing pharmacy search",
+        "operationId": "searchPharmacy",
+        "parameters": [
+          {
+            "name": "PharmacySearchQuery",
+            "in": "query",
+            "description": "Query to search for pharmacies",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PharmacySearchQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PharmacySearchResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/resource/{slug}": {
+      "get": {
+        "tags": [
+          "Resource"
+        ],
+        "description": "Return the JSON containing resource search",
+        "operationId": "findResource",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Slug of the Resource on Frontstage",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Topic"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/search/topic": {
+      "get": {
+        "tags": [
+          "Topic"
+        ],
+        "description": "Return the JSON containing topic search",
+        "operationId": "searchTopic",
+        "parameters": [
+          {
+            "name": "TopicSearchQuery",
+            "in": "query",
+            "description": "Query for topic search",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/TopicSearchQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TopicSearch"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/search/article": {
+      "get": {
+        "tags": [
+          "Article"
+        ],
+        "description": "Return the JSON containing article search",
+        "operationId": "searchArticle",
+        "parameters": [
+          {
+            "name": "ArticleSearchQuery",
+            "in": "query",
+            "description": "Query for article search",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ArticleSearchQuery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ArticleSearch"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/sitemap": {
+      "get": {
+        "tags": [
+          "Sitemap"
+        ],
+        "description": "Return the sitemap data",
+        "operationId": "getSitemap",
+        "responses": {
+          "200": {
+            "description": "The sitemap data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/testimonial": {
+      "get": {
+        "tags": [
+          "Testimonial"
+        ],
+        "description": "Return the JSON containing testimonial list",
+        "operationId": "listTestimonial",
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Testimonial"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connector/api/topic/{slug}": {
+      "get": {
+        "tags": [
+          "Topic"
+        ],
+        "description": "Return the JSON containing topic search",
+        "operationId": "findTopic",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "description": "Slug of the Topic on Frontstage",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Topic"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ArticleSearchQuery": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderBy": {
+            "description": "Key is the field (publishedAtDate), value is 'asc' or 'desc'",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "example": "['publishedAtDate' => 'asc']",
+            "nullable": true
+          },
+          "limit": {
+            "type": "string",
+            "nullable": true
+          },
+          "page": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "description": "Status of the article",
+            "type": "string",
+            "example": "published",
+            "nullable": true
+          },
+          "id": {
+            "description": "Array of IDs",
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "example": "[1, 2, 3]",
+            "nullable": true
+          },
+          "idNe": {
+            "description": "Array of IDs to exclude",
+            "type": "array",
+            "items": {
+              "type": "integer"
+            },
+            "example": "[4, 5, 6]",
+            "nullable": true
+          },
+          "categoryId": {
+            "description": "ID of the category",
+            "type": "integer",
+            "example": "1",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "writeOnly": true
+      },
+      "HealthFacilitySearchQuery": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "limit": {
+            "type": "integer",
+            "nullable": true
+          },
+          "offset": {
+            "type": "integer",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "PharmacySearchQuery": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "limit": {
+            "type": "integer",
+            "nullable": true
+          },
+          "offset": {
+            "type": "integer",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "TopicSearchQuery": {
+        "properties": {
+          "query": {
+            "type": "string",
+            "nullable": true
+          },
+          "codes": {
+            "description": "List of codes of topics you want to query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['NGAP', 'NGAPPERF', 'PLAI']",
+            "nullable": true
+          },
+          "jobs": {
+            "description": "List of codes of jobs you want to query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['INF', 'MED', 'PHA']",
+            "nullable": true
+          },
+          "courseCodes": {
+            "description": "List of codes of courses you want to be related to the topics",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['NGAP', 'NGAPPERF', 'PLAI']",
+            "nullable": true
+          },
+          "withoutCourseCodes": {
+            "description": "List of codes of courses you dont want to be related to the topics",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['NGAP', 'NGAPPERF', 'PLAI']",
+            "nullable": true
+          },
+          "withoutJobCodes": {
+            "description": "List of codes of jobs you dont want to be related to the topics",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['INF', 'MED', 'PHA']",
+            "nullable": true
+          },
+          "withoutTopicCodes": {
+            "description": "List of codes of topics you dont want to be related to the topics",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['ADDICMED', 'ADOMED', 'CARDIOINF']",
+            "nullable": true
+          },
+          "spaces": {
+            "description": "List of spaces of jobs you want to query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['B2C', 'B2B']",
+            "nullable": true
+          },
+          "themes": {
+            "description": "List of codes of themes you want to query",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['TRENDY', 'DIABETE']",
+            "nullable": true
+          },
+          "isQualifying": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "isEarlybird": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasEnabledTopicFormatRemoteElearning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasEnabledTopicFormatPhysicalClassroom": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasEnabledTopicFormatVirtualClassroom": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasEnabledTopicFormatBusiness": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "hasEnabledTopicFormatBlendedLearning": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "orderBy": {
+            "description": "Key is the field (rank, rank_b2b), value is 'asc' or 'desc'",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "enum": [
+              "asc",
+              "desc"
+            ],
+            "example": "['rank' => 'asc']",
+            "nullable": true
+          },
+          "limit": {
+            "type": "string",
+            "nullable": true
+          },
+          "page": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "writeOnly": true
+      },
+      "Article": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "title": {
+            "type": "string"
+          },
+          "readingTime": {
+            "type": "integer",
+            "nullable": true
+          },
+          "shortTitle": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "metaTitle": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          },
+          "coverUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "ogImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishedAtDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "publishedAtTimestamp": {
+            "type": "integer",
+            "nullable": true
+          },
+          "updatedAtDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/MediaCategory"
+              }
+            ]
+          },
+          "articleRedirect": {
+            "type": "string",
+            "nullable": true
+          },
+          "topics": {
+            "description": "TopicHitOutput>"
+          },
+          "resources": {
+            "description": "ResourceRepresentation>"
+          },
+          "authors": {
+            "description": "MediaAuthorOutput>"
+          },
+          "relatedArticles": {
+            "description": "ArticleOutput>"
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "ArticleSearch": {
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Article"
+            }
+          },
+          "page": {
+            "type": "integer"
+          },
+          "total_items": {
+            "type": "integer"
+          },
+          "last_page": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "CustomCatalog": {
+        "properties": {
+          "pageName": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "shortTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string"
+          },
+          "theme": {
+            "type": "string",
+            "enum": [
+              "santeacademie",
+              "twenty_four_seven_services"
+            ]
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
+          },
+          "actionType": {
+            "type": "string"
+          },
+          "externalOrganizationId": {
+            "type": "integer",
+            "nullable": true
+          },
+          "displayServiceSelect": {
+            "type": "boolean"
+          },
+          "displayEntryDateSelect": {
+            "type": "boolean"
+          },
+          "jobsSelect": {
+            "description": "array{externalCode: string|null, appellation: string|null}>",
+            "type": "array",
+            "items": {
+              "properties": {
+                "externalCode": {
+                  "description": "array{externalCode: string|null, appellation: string|null}>",
+                  "type": "string"
+                },
+                "appellation": {
+                  "description": "array{externalCode: string|null, appellation: string|null}>",
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "openGraph": {
+            "type": "string",
+            "nullable": true
+          },
+          "ogTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "thumbnailOpenGraph": {
+            "type": "string",
+            "nullable": true
+          },
+          "ogDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopicHit"
+            }
+          },
+          "faqs": {
+            "type": "array",
+            "items": {}
+          },
+          "space": {
+            "type": "string",
+            "nullable": true
+          },
+          "registrationFlow": {
+            "type": "string"
+          },
+          "registrationFlowExternalUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "Faq": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "question": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          },
+          "homePage": {
+            "type": "boolean"
+          },
+          "displayCpts": {
+            "type": "boolean"
+          },
+          "displayDrh": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "HealthFacilitySearchResultItem": {
+        "properties": {
+          "rs": {
+            "type": "string"
+          },
+          "siret": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "nofinesset": {
+            "type": "string"
+          },
+          "nofinessej": {
+            "type": "string"
+          },
+          "rslongue": {
+            "type": "string"
+          },
+          "complrs": {
+            "type": "string"
+          },
+          "compldistrib": {
+            "type": "string"
+          },
+          "numvoie": {
+            "type": "string"
+          },
+          "typvoie": {
+            "type": "string"
+          },
+          "voie": {
+            "type": "string"
+          },
+          "compvoie": {
+            "type": "string"
+          },
+          "lieuditbp": {
+            "type": "string"
+          },
+          "commune": {
+            "type": "string"
+          },
+          "departement": {
+            "type": "string"
+          },
+          "libdepartement": {
+            "type": "string"
+          },
+          "ligneacheminement": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "categetab": {
+            "type": "string"
+          },
+          "libcategetab": {
+            "type": "string"
+          },
+          "categagretab": {
+            "type": "string"
+          },
+          "libcategagretab": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "HealthFacilitySearchResult": {
+        "properties": {
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HealthFacilitySearchResultItem"
+            }
+          },
+          "query": {
+            "type": "string"
+          },
+          "processingTimeMs": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "estimatedTotalHits": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "Job": {
+        "properties": {
+          "externalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "appellation": {
+            "type": "string",
+            "nullable": true
+          },
+          "jobParent": {
+            "type": "string",
+            "nullable": true
+          },
+          "backgroundColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "foregroundColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "synapseColor": {
+            "type": "string",
+            "nullable": true
+          },
+          "jobSpaces": {
+            "type": "array",
+            "items": {
+              "properties": {
+                "space": {
+                  "type": "string"
+                },
+                "appellation": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                }
+              },
+              "type": "object"
+            }
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "JobSpace": {
+        "properties": {
+          "jobCode": {
+            "type": "string"
+          },
+          "appellation": {
+            "type": "string",
+            "nullable": true
+          },
+          "spaceCode": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "MediaAuthor": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "firstname": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastname": {
+            "type": "string",
+            "nullable": true
+          },
+          "honorificTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "profilePictureUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "externalCode": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "MediaCategory": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "pluralName": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string"
+          },
+          "ogImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "iconName": {
+            "type": "string",
+            "nullable": true
+          },
+          "colorName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "PharmacySearchResultItem": {
+        "properties": {
+          "rs": {
+            "type": "string"
+          },
+          "siret": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "nofinesset": {
+            "type": "string"
+          },
+          "nofinessej": {
+            "type": "string"
+          },
+          "rslongue": {
+            "type": "string"
+          },
+          "complrs": {
+            "type": "string"
+          },
+          "compldistrib": {
+            "type": "string"
+          },
+          "numvoie": {
+            "type": "string"
+          },
+          "typvoie": {
+            "type": "string"
+          },
+          "voie": {
+            "type": "string"
+          },
+          "compvoie": {
+            "type": "string"
+          },
+          "lieuditbp": {
+            "type": "string"
+          },
+          "commune": {
+            "type": "string"
+          },
+          "departement": {
+            "type": "string"
+          },
+          "libdepartement": {
+            "type": "string"
+          },
+          "ligneacheminement": {
+            "type": "string"
+          },
+          "telephone": {
+            "type": "string"
+          },
+          "categetab": {
+            "type": "string"
+          },
+          "libcategetab": {
+            "type": "string"
+          },
+          "categagretab": {
+            "type": "string"
+          },
+          "libcategagretab": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "PharmacySearchResult": {
+        "properties": {
+          "hits": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PharmacySearchResultItem"
+            }
+          },
+          "query": {
+            "type": "string"
+          },
+          "processingTimeMs": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          },
+          "offset": {
+            "type": "integer"
+          },
+          "estimatedTotalHits": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ResourceCategory": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "viewCounterLabel": {
+            "type": "string",
+            "nullable": true
+          },
+          "ctaLabel": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "Resource": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "actionValue": {
+            "type": "string",
+            "nullable": true
+          },
+          "caption": {
+            "type": "string",
+            "nullable": true
+          },
+          "contentUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "displayUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "nullable": true
+          },
+          "extract": {
+            "type": "string",
+            "nullable": true
+          },
+          "keyIndicators": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resourceCategory": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ResourceCategory"
+              }
+            ]
+          },
+          "scheduledAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "viewCounter": {
+            "type": "integer",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "ogImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "resourceRedirect": {
+            "type": "string",
+            "nullable": true
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Job"
+            }
+          },
+          "resourceTrainers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ResourceTrainer"
+            }
+          },
+          "topics": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopicHit"
+            }
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "ResourceTrainer": {
+        "properties": {
+          "trainer": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Trainer"
+              }
+            ]
+          },
+          "trainerHost": {
+            "type": "boolean"
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "Testimonial": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "nullable": true
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "zipcode": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          },
+          "videoPreview": {
+            "type": "string",
+            "nullable": true
+          },
+          "rank": {
+            "type": "integer",
+            "nullable": true
+          },
+          "jobLabel": {
+            "type": "string",
+            "nullable": true
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          },
+          "authorPictureUrl": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "TopicFormat": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "format": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "enabled",
+              "disabled"
+            ]
+          },
+          "fundings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['OPCO', 'DPC']"
+          },
+          "courseCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "argumentFunding": {
+            "type": "string",
+            "nullable": true
+          },
+          "argumentValidating": {
+            "type": "string",
+            "nullable": true
+          },
+          "argumentCompensation": {
+            "type": "string",
+            "nullable": true
+          },
+          "argumentResources": {
+            "type": "string",
+            "nullable": true
+          },
+          "argumentDuration": {
+            "type": "string",
+            "nullable": true
+          },
+          "educationalMilestoneLink": {
+            "type": "string",
+            "nullable": true
+          },
+          "refDpc": {
+            "type": "string",
+            "nullable": true
+          },
+          "hasVirtualClassroom": {
+            "type": "boolean"
+          },
+          "registrationFlow": {
+            "type": "string",
+            "enum": [
+              "gateway",
+              "modal",
+              "external_url"
+            ]
+          },
+          "registrationFlowExternalUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "timeline": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "TopicHit": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string"
+          },
+          "shortname": {
+            "type": "string"
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['MED', 'INF']"
+          },
+          "fundings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['DPC', 'OPCO']"
+          },
+          "isQualifying": {
+            "type": "boolean"
+          },
+          "hasEnabledTopicFormatRemoteElearning": {
+            "type": "boolean"
+          },
+          "hasEnabledTopicFormatPhysicalClassroom": {
+            "type": "boolean"
+          },
+          "hasEnabledTopicFormatVirtualClassroom": {
+            "type": "boolean"
+          },
+          "hasEnabledTopicFormatBusiness": {
+            "type": "boolean"
+          },
+          "hasEnabledTopicFormatBlendedLearning": {
+            "type": "boolean"
+          },
+          "duration": {
+            "type": "integer",
+            "nullable": true
+          },
+          "isNew": {
+            "type": "boolean"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "isEarlybird": {
+            "type": "boolean"
+          },
+          "thumbnail": {
+            "type": "string",
+            "nullable": true
+          },
+          "rank": {
+            "type": "integer",
+            "nullable": true
+          },
+          "tag": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "Topic": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "shortname": {
+            "type": "string"
+          },
+          "jobs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "fundings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "example": "['DPC', 'OPCO']"
+          },
+          "isQualifying": {
+            "type": "boolean"
+          },
+          "duration": {
+            "type": "integer",
+            "nullable": true
+          },
+          "isNew": {
+            "type": "boolean"
+          },
+          "slug": {
+            "type": "string"
+          },
+          "spaces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "isEarlybird": {
+            "type": "boolean"
+          },
+          "shortDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoTeaser": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoPreviewsId1": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoPreviewsId2": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoPreviewsId3": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoPreviewsId4": {
+            "type": "string",
+            "nullable": true
+          },
+          "videoAdoptersId": {
+            "type": "string",
+            "nullable": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          },
+          "educationalMilestone": {
+            "type": "string",
+            "nullable": true
+          },
+          "metaTitle": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          },
+          "ogImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "presentationThumbnail": {
+            "type": "string",
+            "nullable": true
+          },
+          "partnerPicture": {
+            "type": "string",
+            "nullable": true
+          },
+          "partnerDescription": {
+            "type": "string",
+            "nullable": true
+          },
+          "topicFormatRemoteElearning": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TopicFormat"
+              }
+            ]
+          },
+          "topicFormatPhysicalClassroom": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TopicFormat"
+              }
+            ]
+          },
+          "topicFormatVirtualClassroom": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TopicFormat"
+              }
+            ]
+          },
+          "topicFormatBusiness": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TopicFormat"
+              }
+            ]
+          },
+          "topicFormatBlendedLearning": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TopicFormat"
+              }
+            ]
+          },
+          "topicRedirect": {
+            "type": "string",
+            "nullable": true
+          },
+          "trainers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Trainer"
+            }
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      },
+      "TopicSearch": {
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopicHit"
+            }
+          },
+          "page": {
+            "type": "integer"
+          },
+          "total_items": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "Trainer": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstname": {
+            "type": "string"
+          },
+          "lastname": {
+            "type": "string"
+          },
+          "shortBiography": {
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "nullable": true
+          },
+          "picture": {
+            "type": "string",
+            "nullable": true
+          },
+          "institution": {
+            "type": "string",
+            "nullable": true
+          },
+          "honorificTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "shortHonorificTitle": {
+            "type": "string",
+            "nullable": true
+          },
+          "gender": {
+            "type": "string",
+            "nullable": true
+          },
+          "tagLine": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object",
+        "readOnly": true
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Article",
+      "description": "Article"
+    },
+    {
+      "name": "CustomCatalog",
+      "description": "CustomCatalog"
+    },
+    {
+      "name": "Faq",
+      "description": "Faq"
+    },
+    {
+      "name": "Health Facility",
+      "description": "Health Facility"
+    },
+    {
+      "name": "Job",
+      "description": "Job"
+    },
+    {
+      "name": "JobSpace",
+      "description": "JobSpace"
+    },
+    {
+      "name": "MediaCategory",
+      "description": "MediaCategory"
+    },
+    {
+      "name": "Pharmacy",
+      "description": "Pharmacy"
+    },
+    {
+      "name": "Resource",
+      "description": "Resource"
+    },
+    {
+      "name": "Topic",
+      "description": "Topic"
+    },
+    {
+      "name": "Sitemap",
+      "description": "Sitemap"
+    },
+    {
+      "name": "Testimonial",
+      "description": "Testimonial"
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  openapi/santeacademie-frontstage-openapi.json (4xx responses) +
+  openapi/santeacademie-connector-openapi.json + live anonymous error probes on 2026-08-17
+note: >-
+  Derived and probed only. There is no published error reference to search — Santé Académie has no developer
+  documentation — so titles and remediation below are read off real responses and off the specs, never invented. Both
+  documents are extremely thin on failure: the Frontstage spec declares exactly one error response (404) across ten
+  operations, and the Connector spec declares NONE at all across fourteen.
+format:
+  frontstage: rfc9457-shaped
+  connector: none
+  detail: >-
+    Frontstage returns the application/problem+json media type, so it is RFC 9457-shaped in form. It is not usefully
+    conformant in substance: `type` is the API Platform default
+    https://tools.ietf.org/html/rfc2616#section-10 — a section reference in a superseded RFC, identical for every
+    error — and `title` is the constant string "An error occurred". A client cannot distinguish a missing topic from a
+    validation failure by type or title, only by HTTP status and the free-text `detail`.
+    Connector has no error format at all: it returns a bare quoted JSON string.
+envelope:
+  frontstage:
+    media_type: application/problem+json
+    fields:
+    - name: type
+      constant: https://tools.ietf.org/html/rfc2616#section-10
+      note: not per-problem; the same value on every error
+    - name: title
+      constant: An error occurred
+      note: not per-problem
+    - name: detail
+      note: the only field that varies (e.g. "Not Found", "Full authentication is required to access this resource.")
+  connector:
+    media_type: application/json
+    fields: []
+    shape: bare JSON string, e.g. "Topic not found"
+problem_types:
+- id: not-found-frontstage
+  api: Santé Académie Frontstage API
+  status: 404
+  type: https://tools.ietf.org/html/rfc2616#section-10
+  title: An error occurred
+  detail: Not Found
+  meaning: The requested slug does not resolve to a topic, resource or custom catalog.
+  declared_in_spec: true
+  spec_description: Resource not found
+  operations:
+  - GET /api/topics/{slug}
+  - GET /api/resources/{slug}
+  - GET /api/resources/{slug}/topics
+  - GET /api/custom-catalogs/{slug}
+  - GET /api/topics-search/filters
+  - GET /api/resources-search/filters
+  - GET /api/topics/jobs/counts-by-space
+  remediation: >-
+    Resolve slugs from a search or sitemap response rather than constructing them. Live slugs come from
+    GET /api/topics-search, GET /api/resources-search or GET /connector/api/sitemap.
+  evidence:
+    method: probed
+    url: https://frontstage.santeacademie.com/api/topics/nonexistent-slug-xyz-99
+    http_status: 404
+    content_type: application/problem+json; charset=utf-8
+    body: '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}'
+- id: not-found-connector
+  api: Santé Académie Connector API
+  status: 404
+  type: null
+  title: null
+  detail: Topic not found
+  meaning: The requested slug does not resolve. The message names the entity, in English, as a bare string.
+  declared_in_spec: false
+  spec_note: >-
+    The Connector specification declares only a 200 response for all fourteen operations. This 404 is real but
+    entirely undocumented — a generated client would treat it as an unexpected response.
+  operations:
+  - GET /connector/api/topic/{slug}
+  - GET /connector/api/article/{slug}
+  - GET /connector/api/resource/{slug}
+  - GET /connector/api/custom-catalog/{slug}
+  remediation: >-
+    Check the HTTP status; do not parse the body for a code, because there is none. String-matching the message is
+    the only signal available and it is not a contract.
+  evidence:
+    method: probed
+    url: https://frontstage.santeacademie.com/connector/api/topic/nonexistent-slug-xyz-99
+    http_status: 404
+    content_type: application/json
+    body: '"Topic not found"'
+- id: no-route
+  api: Santé Académie Connector API
+  status: 404
+  meaning: Path is not a routed endpoint at all (Symfony router miss), distinct from a resolved endpoint with a bad slug.
+  declared_in_spec: false
+  remediation: Verify the path prefix; /connector/api/* and /api/* are separate routers on the same host.
+  evidence:
+    method: probed
+    url: https://crossguard.santeacademie.com/api
+    http_status: 404
+    content_type: application/json
+    body: 'No route found for "GET http://crossguard.santeacademie.com/api"'
+    note: probed on a sibling internal host, which is where this envelope was visible
+undeclared_but_expected:
+  note: >-
+    Statuses a caller must handle that neither specification mentions. Listed as expectations, not as documented
+    contract — no 5xx or 429 was induced during probing and none is invented here.
+  statuses:
+  - status: 500
+    reason: >-
+      Observed live on the sibling API Platform service at https://contentstudio.santeacademie.com/api/docs.jsonld,
+      which returned an HTML error page rather than problem+json — evidence that this Symfony stack can return
+      unhandled 500s with a non-JSON body. Not induced on the public Frontstage routes.
+    evidence:
+      method: probed
+      url: https://contentstudio.santeacademie.com/api/docs.jsonld
+      http_status: 500
+      content_type: text/html; charset=UTF-8
+  - status: 429
+    reason: No rate limit is published and none was observed; if one exists it is undocumented and unsignalled.
+  - status: 400
+    reason: >-
+      The four Connector search operations declare a REQUIRED query parameter named after a PHP DTO class
+      (TopicSearchQuery, ArticleSearchQuery, PharmacySearchQuery, HealthFacilitySearchQuery) with no schema. Callers
+      will fail these requests and the specification describes no failure response for them.
+gated_surface_errors:
+  note: Recorded because it is the clearest problem+json Santé Académie actually emits, though on an internal host.
+  surfaces:
+  - api: contentstudio (internal, not public)
+    status: 401
+    media_type: application/problem+json
+    detail: Full authentication is required to access this resource.
+    evidence:
+      method: probed
+      url: https://contentstudio.santeacademie.com/api/docs
+      http_status: 401
+summary:
+  problem_types_documented_by_provider: 1
+  problem_types_observed: 4
+  apis_with_rfc9457_media_type: 1
+  apis_with_no_error_format: 1
+  operations_with_zero_declared_error_responses: 17
+recommendations:
+- >-
+  Give each problem a real `type` URI and a specific `title`. As shipped, every Frontstage error is byte-identical
+  except for `detail`, which defeats the point of problem+json.
+- Declare the 404 on the Connector operations and return an object, not a bare string.
+- Document the 400 shape for the four required search-query parameters, which are currently unusable from the spec.

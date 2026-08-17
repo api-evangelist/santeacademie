@@ -1,0 +1,87 @@
+generated: '2026-08-17'
+method: probed
+source: >-
+  live anonymous responses from https://frontstage.santeacademie.com on 2026-08-17 (response-header inspection) +
+  openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json
+limit_count: 0
+documented: false
+detail: >-
+  Santé Académie publishes no rate limit for either public API, and neither API returns a rate-limit header. There is
+  no developer documentation in which a limit could be stated, and neither OpenAPI document declares a 429 response.
+  An honest zero: the limit is not "unlimited", it is unknown to the caller and unsignalled at runtime.
+limits: []
+runtime_signaling:
+  headers_returned: []
+  ratelimit_standard_headers: false
+  x_ratelimit_headers: false
+  retry_after: false
+  status_on_exhaustion: unknown
+  detail: >-
+    No RateLimit-Limit / RateLimit-Remaining / RateLimit-Reset (RFC 9239-style), no X-RateLimit-*, and no Retry-After
+    appeared on any observed response. A client cannot back off deliberately — it can only fail and guess.
+  headers_actually_returned:
+    note: what the API DOES return instead, for the avoidance of doubt
+    frontstage_collection:
+    - 'content-type: application/json; charset=utf-8'
+    - 'etag: "94cc70ae9385ce7f8a97c86400459c5d"'
+    - 'cache-control: no-cache, private'
+    - 'vary: Accept-Encoding, Accept'
+    - 'x-content-type-options: nosniff'
+    - 'x-frame-options: deny'
+    - 'strict-transport-security: max-age=31536000; includeSubDomains'
+    - 'x-datadog-trace-id: 7641186826085955745'
+    - 'x-project-name: frontstage'
+    - 'x-version-id: v134'
+    connector_collection:
+    - 'content-type: application/json'
+    - 'cache-control: max-age=0, must-revalidate, private'
+    - 'x-datadog-trace-id: 5963083293157494322'
+    - 'x-project-name: frontstage'
+    - 'x-version-id: v134'
+spec_declarations:
+  frontstage:
+    declares_429: false
+    error_responses_declared: ['404']
+  connector:
+    declares_429: false
+    error_responses_declared: []
+evidence:
+- method: probed
+  url: https://frontstage.santeacademie.com/api/jobs
+  http_status: 200
+  authenticated: false
+  rate_limit_headers_present: false
+- method: probed
+  url: https://frontstage.santeacademie.com/api/resources-search?itemsPerPage=1
+  http_status: 200
+  authenticated: false
+  rate_limit_headers_present: false
+- method: probed
+  url: https://frontstage.santeacademie.com/connector/api/faq
+  http_status: 200
+  authenticated: false
+  rate_limit_headers_present: false
+- method: probed
+  url: https://frontstage.santeacademie.com/api/topics/nonexistent-slug-xyz-99
+  http_status: 404
+  authenticated: false
+  rate_limit_headers_present: false
+probe_ethics_note: >-
+  No limit was induced. Probing stopped at a handful of ordinary reads; API Evangelist does not flood a provider's
+  endpoint to discover a threshold, so the absence recorded here is the absence of a PUBLISHED limit and of a runtime
+  SIGNAL — not proof that no server-side throttle exists.
+upstream_protection_observed:
+  cdn: >-
+    Neither public API host sits behind a CDN edge that advertises itself in the response headers (no x-cache, no via,
+    no cf-ray). Requests appear to reach the origin directly. By contrast play.santeacademie.com and
+    support.santeacademie.com are served through CloudFront.
+  note: >-
+    Combined with the absence of authentication, this means the two catalog APIs are unauthenticated, unrated and
+    apparently unfronted — the single most material operational finding in this repo.
+recommendations:
+- >-
+  Publish a limit and return RateLimit-* headers. With no credential to attribute traffic to and no throttle signal,
+  the only tool available against abuse is a blunt block, which would break the company's own websites and learner app
+  because they call these same endpoints.
+- >-
+  Declare a 429 response in both OpenAPI documents once a limit exists, so generated clients handle it.

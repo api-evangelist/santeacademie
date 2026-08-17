@@ -1,0 +1,210 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json + live anonymous
+  responses from https://frontstage.santeacademie.com on 2026-08-17
+note: >-
+  Derived, not searched: Santé Académie publishes no developer documentation, so every convention below was read
+  either out of the two specifications or off a live response. Where the two public APIs disagree — and they disagree
+  on the error contract and on pagination — both behaviours are recorded rather than averaged.
+cross_links:
+  errors: errors/santeacademie-problem-types.yml
+  lifecycle: lifecycle/santeacademie-lifecycle.yml
+  authentication: authentication/santeacademie-authentication.yml
+  rate_limits: rate-limits/santeacademie-rate-limits.yml
+  data_model: data-model/santeacademie-data-model.yml
+auth_style:
+  scheme: none
+  detail: >-
+    No credential of any kind. Neither spec declares a securityScheme and both APIs answer anonymous GETs with 200.
+  source: authentication/santeacademie-authentication.yml
+idempotency:
+  supported: false
+  detail: >-
+    Not applicable and not claimed. All 24 published operations across both APIs are GET, so every call is naturally
+    idempotent and there is no write path that would need an Idempotency-Key. No idempotency header is documented or
+    observed.
+  header: null
+  scope: null
+  retention: null
+pagination:
+  frontstage:
+    style: page-number
+    supported: true
+    request_params:
+    - name: page
+      in: query
+      type: integer
+      note: 1-based
+    - name: itemsPerPage
+      in: query
+      type: integer
+    - name: pagination
+      in: query
+      type: boolean
+      note: set false to disable paging and return the full collection
+    response_fields:
+    - elements
+    - currentPage
+    - lastPage
+    - itemsPerPage
+    - totalItems
+    envelope: '{ "elements": [...], "currentPage": 1, "lastPage": 608, "itemsPerPage": 1, "totalItems": 608 }'
+    observed:
+      url: https://frontstage.santeacademie.com/api/resources-search?itemsPerPage=1
+      http_status: 200
+      note: returned totalItems 608, lastPage 608 — a real live count, not a spec claim
+    applies_to:
+    - /api/resources-search
+    - /api/topics-search
+    - /api/jobs
+    note: >-
+      Custom envelope, NOT Hydra. API Platform's default is a JSON-LD/Hydra collection with hydra:totalItems and
+      hydra:view; Santé Académie has replaced it with plain elements/currentPage/lastPage/itemsPerPage/totalItems, so
+      generic API Platform clients will not recognise the collection shape.
+  connector:
+    style: none
+    supported: false
+    detail: >-
+      No page, limit or cursor parameter exists on any of the fourteen connector operations. Collection endpoints
+      (/connector/api/faq, /testimonial, /job, /job/space, /media/category, /sitemap) return the whole set in one
+      unbounded array. A caller has no way to bound a response.
+filtering_and_sorting:
+  style: API Platform bracket filters (Frontstage only)
+  scalar_and_array_form: >-
+    Every filter is declared twice — once scalar (`status`) and once repeatable (`status[]`) — which is the API
+    Platform convention for OR-ing multiple values of one filter.
+  filters:
+    /api/topics-search:
+    - externalCode
+    - topicJobs.job.externalCode
+    - topicThematics.thematic.id
+    - topicCourses.course.virtualClassroom
+    - topicCourses.course.qualifying
+    /api/resources-search:
+    - id
+    - status
+    - resourceCategory.code
+    - resourceJobs.space
+    - resourceJobs.job.externalCode
+    - resourceThematics.thematic.id
+    - private
+    /api/jobs:
+    - exists[jobParent]
+  sorting:
+    style: 'order[<field>]=asc|desc'
+    fields:
+      /api/topics-search: ['order[rank]', 'order[rankB2b]']
+      /api/resources-search: ['order[viewCounter]', 'order[rank]']
+  facet_discovery: >-
+    Both search endpoints ship a companion /filters operation (/api/topics-search/filters,
+    /api/resources-search/filters) that returns the legal facet values. Call it before building a filtered query —
+    the accepted profession codes come from /api/jobs, and the thematic ids come from the filters endpoint.
+field_expansion:
+  supported: false
+  detail: >-
+    No expand, include, fields or sparse-fieldset parameter. Response shape is fixed per operation, and API Platform
+    serialization groups are baked into the schema names (…-topics-search.get, …-resources.get), so the same entity
+    comes back with different property sets depending on which operation returned it. A client must model the
+    per-operation representation, not one canonical entity.
+metadata:
+  supported: false
+  detail: No customer-writable metadata; the API is read-only.
+request_id_tracing:
+  supported: partial
+  headers_returned:
+  - name: x-datadog-trace-id
+    example: '7641186826085955745'
+    note: >-
+      A Datadog APM trace id is returned on every response. It is the only correlation handle a caller gets, and it
+      is only useful to Santé Académie's own engineers — there is no support channel documented for quoting it, and
+      no request-id header a client can set on the way in.
+  - name: x-project-name
+    example: frontstage
+    note: names the internal service that answered
+  - name: x-version-id
+    example: v134
+    note: internal build/deploy id, not an API version a caller can pin
+  client_supplied: false
+versioning:
+  strategy: none
+  in_path: false
+  in_header: false
+  media_type: false
+  declared_versions:
+    frontstage: 1.0.0
+    connector: '1.0'
+  detail: >-
+    Neither API is versioned in a way a consumer can act on. There is no /v1/ path segment, no Accept-Version or
+    API-Version header, and no version in the media type. `info.version` is a static string in both documents. The
+    only thing that changes per deploy is the informational x-version-id header. A breaking change would therefore
+    arrive with no warning and no way to pin the old behaviour.
+  source: lifecycle/santeacademie-lifecycle.yml
+error_envelope:
+  disagreement: true
+  detail: >-
+    The two public APIs on the same host return different error contracts. This is the single most important
+    integration convention on this provider and it is undocumented.
+  frontstage:
+    media_type: application/problem+json
+    shape: [type, title, detail]
+    observed:
+      url: https://frontstage.santeacademie.com/api/topics/nonexistent-slug-xyz-99
+      http_status: 404
+      body: '{"type":"https://tools.ietf.org/html/rfc2616#section-10","title":"An error occurred","detail":"Not Found"}'
+    note: >-
+      Uses the problem+json media type but the API Platform default `type`, which points at an RFC 2616 section
+      rather than a dereferenceable problem-type URI, and a generic title of "An error occurred". Machine-readable in
+      form, not in substance.
+  connector:
+    media_type: application/json
+    shape: bare JSON string
+    observed:
+      url: https://frontstage.santeacademie.com/connector/api/topic/nonexistent-slug-xyz-99
+      http_status: 404
+      body: '"Topic not found"'
+    note: >-
+      A quoted string, not an object. There is no field to branch on — a client can only read the HTTP status and
+      string-match English prose.
+  source: errors/santeacademie-problem-types.yml
+rate_limit_signaling:
+  headers: []
+  status_on_exhaustion: unknown
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header appeared on any live 200 or 404, and no limit is documented.
+    A client has no runtime signal and no published number, so it cannot back off deliberately.
+  source: rate-limits/santeacademie-rate-limits.yml
+caching:
+  frontstage:
+    etag: true
+    example: '"94cc70ae9385ce7f8a97c86400459c5d"'
+    cache_control: 'no-cache, private'
+    note: >-
+      An ETag is returned and conditional revalidation with If-None-Match will work, but `no-cache, private` forbids
+      any shared/CDN caching of a catalog that is essentially static reference data.
+  connector:
+    etag: false
+    cache_control: 'max-age=0, must-revalidate, private'
+content_negotiation:
+  frontstage:
+    produces: [application/json, text/html]
+    note: >-
+      API Platform will render HTML for a browser Accept header on the same URL. Send `Accept: application/json`
+      explicitly — a client that omits it can receive a documentation page instead of data.
+  connector:
+    produces: [application/json]
+security_headers_observed:
+  frontstage:
+  - 'strict-transport-security: max-age=31536000; includeSubDomains'
+  - 'x-content-type-options: nosniff'
+  - 'x-frame-options: deny'
+recommendations:
+- Reconcile the two error envelopes; a bare JSON string is not something a client can branch on.
+- >-
+  Replace the API Platform default problem `type` with a dereferenceable Santé Académie problem-type URI and a real
+  title, so the problem+json is worth the media type it claims.
+- Add paging to the connector collection endpoints, which are currently unbounded.
+- >-
+  Version the APIs, or state publicly that they are internal. With no version and no deprecation policy, any change
+  is a breaking change for every consumer that has found these endpoints.
+- Publish a rate limit and return RateLimit-* headers, so a client can back off instead of being throttled blindly.

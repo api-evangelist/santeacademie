@@ -1,0 +1,184 @@
+generated: '2026-08-17'
+method: searched
+source: >-
+  https://api.github.com/orgs/santeacademie/repos + https://packagist.org/packages/list.json?vendor=santeacademie +
+  https://repo.packagist.org/p2/santeacademie/*.json + registry.npmjs.org search + pypi.org
+note: >-
+  IMPORTANT SCOPE NOTE — Santé Académie publishes NO API client library. Not one. Every package below is
+  general-purpose engineering tooling the company open-sourced; none of them wraps the two public catalog APIs
+  profiled in this repo, and none of them is an SDK. `official: true` means first-party (published under the
+  company's own vendor namespace from its own GitHub org), not "SDK for the Santé Académie API". No `SDKs` pointer is
+  emitted in apis.yml for exactly this reason: emitting one would credit the company with a client library it has
+  never shipped.
+sdk_count: 0
+package_count: 2
+registries_searched:
+- registry: packagist
+  query: 'vendor=santeacademie'
+  result: 2 packages
+- registry: npm
+  queries: [santeacademie, sante-academie]
+  result: 0 packages under any santeacademie scope or name
+- registry: pypi
+  query: santeacademie
+  result: 404
+- registry: maven-central
+  result: not searched — the company publishes no JVM code in its public GitHub org
+- registry: nuget
+  result: not searched — the company publishes no .NET code in its public GitHub org
+- registry: crates.io
+  result: not searched — the company publishes no Rust code in its public GitHub org
+- registry: rubygems
+  result: not searched — the company publishes no Ruby code in its public GitHub org
+- registry: pkg.go.dev
+  result: not searched — the company publishes no Go code in its public GitHub org
+packages:
+- name: santeacademie/super-uploader-bundle
+  registry: packagist
+  language: php
+  framework: symfony
+  url: https://packagist.org/packages/santeacademie/super-uploader-bundle
+  repository: https://github.com/santeacademie/super-uploader-bundle
+  description: Uploading management system for Symfony
+  official: true
+  is_api_client: false
+  version: v3.2.2
+  published: '2025-07-22'
+  release_count: 47
+  license: MIT
+  downloads_total: 0
+  stars: 1
+  note: >-
+    First-party Symfony bundle, actively released (47 versions), latest 2025-07-22 — about thirteen months before this
+    pass. Zero recorded Packagist downloads, so it is published-but-unused outside the company. Not an API client.
+- name: santeacademie/super-select
+  registry: packagist
+  language: php
+  framework: symfony
+  url: https://packagist.org/packages/santeacademie/super-select
+  repository: https://github.com/santeacademie/super-select
+  description: 'SuperSelect library — "Enumerations before it was cool, but still useful"'
+  official: true
+  is_api_client: false
+  version: v1.5
+  published: '2025-01-20'
+  release_count: 7
+  license: null
+  license_note: no license declared on Packagist
+  downloads_total: 695
+  stars: 0
+  note: >-
+    First-party PHP enumeration helper. Latest release 2025-01-20, roughly nineteen months stale at the time of this
+    pass. No license declared, which makes it unsafe for a third party to adopt. Not an API client.
+public_repos_without_a_registry_package:
+  note: >-
+    The rest of the public GitHub org is either unpublished tooling or a fork. Listed with real `pushed` dates because
+    the decay picture matters: two repositories are archived and five have not been touched in over two years. None of
+    them contains an OpenAPI, AsyncAPI or .proto file — the repository trees were checked.
+  repos:
+  - name: munkitop
+    language: TypeScript
+    description: Web console for building and publishing a Munki repository
+    pushed: '2026-07-01'
+    stars: 2
+    registry: none
+    note: the most recently active public repo; internal macOS fleet tooling, unrelated to the APIs
+  - name: presentation
+    language: HTML
+    description: Tech team presentations about code and stuff
+    pushed: '2026-03-19'
+    registry: none
+  - name: react-data-grid
+    description: fork of the React data-grid component
+    pushed: '2025-07-22'
+    registry: none
+    fork: true
+  - name: scorm-h5p-wrapper
+    description: NodeJS application that packs H5P content into SCORM objects
+    pushed: '2025-04-02'
+    registry: none
+    note: >-
+      The most product-relevant public repo — SCORM/H5P packaging is core e-learning plumbing — but it is an
+      application, not a library, and it is not published to npm.
+  - name: php-url-test
+    language: PHP
+    description: Tests all urls of your application
+    pushed: '2024-04-04'
+    registry: none
+    note: not on Packagist under the santeacademie vendor despite being a PHP library
+  - name: php-yaml
+    language: PHP
+    description: Adds features to symfony/yaml
+    pushed: '2024-04-02'
+    registry: none
+  - name: php-ga-measurement-protocol
+    language: PHP
+    description: Send data to Google Analytics from the server using PHP
+    pushed: '2024-02-05'
+    registry: none
+    fork: true
+  - name: bigbrowser
+    language: TypeScript
+    description: Tampermonkey scripts to enhance UX for internal teams
+    pushed: '2023-04-03'
+    registry: none
+  - name: react-native-htmlview
+    language: JavaScript
+    description: React Native HTML renderer
+    pushed: '2023-02-13'
+    registry: none
+    fork: true
+  - name: gist
+    language: Python
+    pushed: '2023-01-06'
+    registry: none
+    archived: true
+  - name: explained-condition
+    language: PHP
+    description: Human readable list of conditions
+    pushed: '2021-07-04'
+    registry: none
+  - name: coordinosaur
+    language: Python
+    description: Semaphore-like feature over MQTT and more
+    pushed: '2021-05-03'
+    registry: none
+    archived: true
+mobile_applications:
+  note: >-
+    Recorded because they are the company's only shipped, versioned, publicly distributed client software — but they
+    are consumer apps for learners, not developer packages, so they are deliberately not listed as packages above.
+  apps:
+  - platform: ios
+    name: Santé Académie
+    url: https://apps.apple.com/fr/app/sant%C3%A9-acad%C3%A9mie/id1607327534
+    app_id: '1607327534'
+    version: null
+    published: null
+    note: version and release date not read from the App Store during this pass
+  - platform: android
+    package_id: com.santeacademie.santeacademieplayer
+    url: https://play.google.com/store/apps/details?id=com.santeacademie.santeacademieplayer
+    version: null
+    published: null
+    note: version and release date not read from Google Play during this pass
+github_organization:
+  url: https://github.com/santeacademie
+  public_repos: 14
+  created: '2020-12-14'
+  contact: tech@santeacademie.com
+  contains_openapi: false
+  contains_asyncapi: false
+  contains_proto: false
+  contains_sdk: false
+findings:
+- >-
+  Zero API client libraries in any registry, in any language. The two public catalog APIs have no SDK, no code sample
+  and no generated client anywhere public — a consumer starts from the raw OpenAPI documents in openapi/.
+- >-
+  The two first-party Packagist packages are real but stale (2025-07-22 and 2025-01-20) and one declares no license.
+  super-uploader-bundle has 47 releases and 0 downloads, which is the signature of code published for the company's
+  own convenience rather than for adoption.
+- >-
+  The public engineering surface is decaying: nine of fourteen repos were last pushed before 2026, and two are
+  archived. Only munkitop and presentation show 2026 activity.

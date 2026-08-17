@@ -1,0 +1,135 @@
+generated: '2026-08-17'
+method: generated
+source: >-
+  openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json + live responses from
+  https://frontstage.santeacademie.com verified 2026-08-17
+note: >-
+  Santé Académie publishes no skills, no AGENTS.md and no developer documentation of any kind — searched first, nothing
+  found. These three skills are API Evangelist generations grounded in operationIds grepped out of the two published
+  specifications; no operationId, path, parameter or field name below was invented. Where a published operation cannot
+  be called correctly from its own specification, the skill says so instead of guessing.
+provider_published_skills:
+  found: false
+  probed:
+  - url: https://frontstage.santeacademie.com/llms.txt
+    status: 404
+  - url: https://www.santeacademie.com/llms.txt
+    status: 404
+  - url: https://github.com/santeacademie
+    status: 200
+    note: 14 public repos checked; no AGENTS.md, no skills directory, no MCP server
+skills:
+- name: santeacademie-find-funded-dpc-training
+  file: santeacademie-find-funded-dpc-training.md
+  api: Santé Académie Frontstage API
+  flow: resolve profession code -> read facets -> search topics -> read the funded, priced offer
+  operations:
+  - api_jobs_get_collection
+  - api_topics-searchfilters_get
+  - api_topics-search_get_collection
+  - api_topics_slug_get
+  why: >-
+    The marquee flow. It is the only path to the Product objects (price, compensation, courseCode, jobCode,
+    fundingCode) and the refDpc ANDPC programme reference, neither of which appears anywhere on the public website.
+- name: santeacademie-browse-webinars-and-content
+  file: santeacademie-browse-webinars-and-content.md
+  api: Santé Académie Frontstage API + Connector API
+  flow: read facets -> search resources by category/profession/popularity -> resolve -> link back to funded topics
+  operations:
+  - api_resources-searchfilters_get
+  - api_resources-search_get_collection
+  - api_resources_slug_get
+  - api_resources_slugtopics_get
+  - searchArticle
+  - findArticle
+  - listFaq
+  - listMediaCategory
+  why: >-
+    Covers the free/editorial layer, the real viewCounter engagement sort, and the scheduledAt webinar feed. Also the
+    only skill that has to route around a broken published contract (searchArticle's un-expanded DTO parameter).
+- name: santeacademie-enumerate-catalog
+  file: santeacademie-enumerate-catalog.md
+  api: Santé Académie Connector API + Frontstage API
+  flow: sitemap index -> cache reference sets -> resolve each slug -> pace against an unsignalled rate limit
+  operations:
+  - getSitemap
+  - findTopic
+  - findArticle
+  - findResource
+  - findCustomCatalog
+  - listJob
+  - listJobSpaces
+  - listMediaCategory
+  - api_topicsjobscounts-by-space_get
+  why: >-
+    Coverage rather than lookup. Carries the two cross-cutting warnings an agent most needs on this provider: the two
+    routers return different error contracts, and custom-catalog slugs identify named B2B customers and must never be
+    enumerated.
+operationid_map:
+  note: >-
+    Recorded so nothing is lost by the overlay. The Frontstage API's upstream operationIds are API Platform
+    auto-generations; overlays/santeacademie-frontstage-overlay.yaml renames each to a readable alias. The skills above
+    reference the UPSTREAM ids, so they stay correct against the verbatim specification.
+  frontstage:
+  - upstream: api_jobs_get_collection
+    alias: listJobs
+    request: GET /api/jobs
+  - upstream: api_topics-search_get_collection
+    alias: searchTopics
+    request: GET /api/topics-search
+  - upstream: api_topics-searchfilters_get
+    alias: getTopicSearchFilters
+    request: GET /api/topics-search/filters
+  - upstream: api_topics_slug_get
+    alias: getTopic
+    request: GET /api/topics/{slug}
+  - upstream: api_topicsjobscounts-by-space_get
+    alias: getTopicCountsByJobAndSpace
+    request: GET /api/topics/jobs/counts-by-space
+  - upstream: api_resources-search_get_collection
+    alias: searchResources
+    request: GET /api/resources-search
+  - upstream: api_resources-searchfilters_get
+    alias: getResourceSearchFilters
+    request: GET /api/resources-search/filters
+  - upstream: api_resources_slug_get
+    alias: getResource
+    request: GET /api/resources/{slug}
+  - upstream: api_resources_slugtopics_get
+    alias: getResourceTopics
+    request: GET /api/resources/{slug}/topics
+  - upstream: api_custom-catalogs_slug_get
+    alias: getCustomCatalog
+    request: GET /api/custom-catalogs/{slug}
+  connector_note: >-
+    The Connector API's operationIds are already readable (findTopic, searchTopic, listJob, getSitemap …) and are used
+    verbatim; the connector overlay does not rename them.
+operations_deliberately_not_covered:
+- operationId: searchPharmacy
+  request: GET /connector/api/pharmacy/search
+  reason: >-
+    Required parameter is the un-expanded PHP DTO class name PharmacySearchQuery with no schema. Neither the input
+    fields nor the response shape is documented anywhere public, so a skill would have to invent them.
+- operationId: searchHealthFacility
+  request: GET /connector/api/health-facility/search
+  reason: same generator artifact — HealthFacilitySearchQuery is un-expanded and undocumented.
+- operationId: searchTopic
+  request: GET /connector/api/search/topic
+  reason: >-
+    Same un-expanded DTO problem (TopicSearchQuery), and the Frontstage
+    api_topics-search_get_collection is a fully specified equivalent — the skills use that instead.
+- operationId: listTestimonial
+  request: GET /connector/api/testimonial
+  reason: >-
+    Callable and documented, but the payload is named, photographed, identified healthcare professionals. Not made into
+    a skill flow on purpose; an agent has no task that needs to retrieve them in bulk.
+- operationId: findCustomCatalog
+  request: GET /connector/api/custom-catalog/{slug}
+  reason: >-
+    Referenced in the enumerate skill only with an explicit prohibition on guessing or listing slugs, because a slug
+    identifies a named B2B customer. Not given a flow of its own.
+coverage:
+  operations_total: 24
+  operations_referenced_by_skills: 18
+  operations_excluded_with_reason: 5
+  skills: 3

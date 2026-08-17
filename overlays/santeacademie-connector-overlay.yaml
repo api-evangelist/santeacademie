@@ -1,0 +1,80 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Santé Académie Connector API
+  version: 1.0.0
+extends: ../openapi/santeacademie-connector-openapi.json
+x-provenance:
+  generated: '2026-08-17'
+  method: generated
+  source: openapi/santeacademie-connector-openapi.json + live probes of https://frontstage.santeacademie.com
+  note: >-
+    The upstream document is saved verbatim and never mutated. This swagger-php document ships NO servers[] block at
+    all and an `info.title` of "api" with `info.description` "api description" — placeholder values the generator
+    left in. The real host is the host that serves the document, https://frontstage.santeacademie.com, confirmed by
+    a live anonymous 200 on GET /connector/api/faq returning Santé Académie's own French FAQ records.
+actions:
+- target: $
+  description: Add the missing servers[] block. Upstream ships none, so the spec names no host at all.
+  update:
+    servers:
+    - url: https://frontstage.santeacademie.com
+      description: Production (the host that serves this specification)
+- target: $.info
+  description: Replace the generator's placeholder title and description with the real identity.
+  update:
+    title: Santé Académie Connector API
+    description: >-
+      Read-only JSON content/catalog API used by santeacademie.com and simulateur.santeacademie.com. Covers article
+      and topic search, per-slug article/topic/resource/custom-catalog lookup, the FAQ, testimonial, profession,
+      job-space and media-category lists, a sitemap feed, and pharmacy / health-facility lookup. No authentication
+      is required; all fourteen operations are GET.
+    x-upstream-placeholder-title: api
+    x-provider: Santé Académie
+    contact:
+      name: Santé Académie
+      url: https://www.santeacademie.com/
+- target: $
+  description: Record the observed runtime semantics the specification does not state.
+  update:
+    x-api-evangelist:
+      authentication: none
+      authentication_verified: anonymous GET /connector/api/faq returned HTTP 200 on 2026-08-17
+      pagination: none — every operation returns an unbounded array or object; no page/limit parameter exists
+      errors:
+        media_type: application/json
+        shape: bare JSON string
+        example: '"Topic not found"'
+        note: >-
+          Not RFC 9457. A caller gets a quoted string, not an object, so there is no machine-readable error code or
+          type to branch on — only the HTTP status. The sibling Frontstage API on the same host returns
+          application/problem+json, so the two public APIs disagree on their error contract.
+      rate_limits: none documented; no RateLimit-*, X-RateLimit-* or Retry-After header observed
+      response_headers_observed: [cache-control, x-project-name, x-version-id]
+      versioning: none a caller can pin; info.version is "1.0" and has never been incremented in the published doc
+- target: $.paths['/connector/api/health-facility/search'].get
+  description: >-
+    Flag the generator artifact. swagger-php serialised the query object as a single required parameter named after
+    its PHP class (HealthFacilitySearchQuery) rather than expanding its fields, so the spec cannot be used to build
+    a valid request without reading the source.
+  update:
+    x-api-evangelist-note: >-
+      Required query parameter is declared as the DTO class name HealthFacilitySearchQuery with no schema type. The
+      individual query fields are not described anywhere public; treat the parameter shape as undocumented.
+- target: $.paths['/connector/api/pharmacy/search'].get
+  update:
+    x-api-evangelist-note: >-
+      Required query parameter is declared as the DTO class name PharmacySearchQuery with no schema type. Same
+      generator artifact as health-facility/search; the field list is not described anywhere public.
+- target: $.paths['/connector/api/search/article'].get
+  update:
+    x-api-evangelist-note: >-
+      Required query parameter is declared as the DTO class name ArticleSearchQuery with no schema type.
+- target: $.paths['/connector/api/search/topic'].get
+  update:
+    x-api-evangelist-note: >-
+      Required query parameter is declared as the DTO class name TopicSearchQuery with no schema type.
+- target: $.paths['/connector/api/sitemap'].get
+  update:
+    x-api-evangelist-note: >-
+      Returns sitemap source data. This is the closest thing Santé Académie publishes to a bulk catalog feed and is
+      the cheapest way for an agent to enumerate every topic and article slug before calling the per-slug lookups.

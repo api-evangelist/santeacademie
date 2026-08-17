@@ -1,0 +1,212 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json — DERIVED CANDIDATE
+  ONLY, after searching for a real server and finding none
+status: candidate
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+  note: >-
+    mode: none because Santé Académie ships NO MCP server of any kind — no hosted endpoint and no installable
+    package. The tools listed below are a candidate derivation from the company's two published OpenAPI documents,
+    produced by API Evangelist, and nothing in this file is reachable today. No endpoint URL is invented.
+search_performed:
+  hosted_endpoint:
+    probed:
+    - url: https://frontstage.santeacademie.com/.well-known/agent-card.json
+      status: 404
+    - url: https://www.santeacademie.com/.well-known/ai-plugin.json
+      status: 404
+    - url: https://frontstage.santeacademie.com/llms.txt
+      status: 404
+    result: no MCP endpoint advertised on any host; no /mcp path is documented anywhere public
+  package_registries:
+    npm:
+      queries: [santeacademie, sante-academie]
+      result: no first-party package; nothing under a @santeacademie scope
+    pypi:
+      query: santeacademie
+      result: 404
+    github_org:
+      url: https://github.com/santeacademie
+      repos_checked: 14
+      result: no MCP server repository
+  conclusion: >-
+    No first-party MCP server exists. The company publishes no developer program at all, so this is an absence of a
+    program rather than a gap in one.
+candidate:
+  rationale: >-
+    Worth deriving despite the absence, because this provider is an unusually clean MCP fit: 24 operations, all GET,
+    no authentication, no rate limit, returning reference data (which DPC training exists, for which profession, funded
+    by which scheme) that an assistant helping a French healthcare professional would need to answer almost any
+    question. A read-only public catalog is the lowest-risk MCP surface there is.
+  transport_recommended: streamable-http
+  auth_recommended: none
+  source_specs:
+  - openapi/santeacademie-frontstage-openapi.json
+  - openapi/santeacademie-connector-openapi.json
+  tools:
+  - name: list_professions
+    description: >-
+      List the healthcare professions (métiers) Santé Académie trains, with their stable codes and the B2C/B2B
+      presentation for each. Call first — every other tool's profession filter takes one of these codes.
+    rest:
+    - GET /api/jobs
+    inputSchema_source: 'openapi: /api/jobs parameters (page, itemsPerPage, pagination, exists[jobParent])'
+    confidence: high
+  - name: search_training_topics
+    description: >-
+      Search DPC training topics, filtered by profession code, thematic, and whether the topic is delivered as a
+      virtual classroom or is qualifying.
+    rest:
+    - GET /api/topics-search
+    inputSchema_source: >-
+      openapi: /api/topics-search parameters (externalCode, topicJobs.job.externalCode, topicThematics.thematic.id,
+      topicCourses.course.virtualClassroom, topicCourses.course.qualifying, order[rank], order[rankB2b], page,
+      itemsPerPage)
+    confidence: high
+  - name: get_training_topic
+    description: >-
+      Get one training topic by slug, with its embedded courses, trainers, funding schemes and per-profession priced
+      products.
+    rest:
+    - GET /api/topics/{slug}
+    confidence: high
+    note: >-
+      This is the highest-value single tool in the set — the embedded Product objects are the only place the price and
+      the professional's indemnity are published at all.
+  - name: get_topic_search_facets
+    description: Return the legal facet values (professions, thematics) accepted by search_training_topics.
+    rest:
+    - GET /api/topics-search/filters
+    confidence: high
+  - name: search_resources
+    description: >-
+      Search content resources — webinars, articles and course assets — by category, profession, space, thematic and
+      status, sortable by view count or editorial rank.
+    rest:
+    - GET /api/resources-search
+    confidence: high
+  - name: get_resource
+    description: Get one resource by slug, with its category, professions and trainers.
+    rest:
+    - GET /api/resources/{slug}
+    - GET /connector/api/resource/{slug}
+    confidence: high
+  - name: get_resource_topics
+    description: List the training topics attached to a resource.
+    rest:
+    - GET /api/resources/{slug}/topics
+    confidence: high
+  - name: get_resource_search_facets
+    description: Return the legal facet values (categories, professions, thematics) accepted by search_resources.
+    rest:
+    - GET /api/resources-search/filters
+    confidence: high
+  - name: get_custom_catalog
+    description: Get a B2B customer-specific catalog by slug, with its topics, FAQs and funding options.
+    rest:
+    - GET /api/custom-catalogs/{slug}
+    - GET /connector/api/custom-catalog/{slug}
+    confidence: high
+    caution: >-
+      Catalog slugs identify named B2B customers (the payload carries externalOrganizationId, a customer logo and
+      theme). A tool that enumerates or guesses slugs would expose one customer's curated catalog to another. Any real
+      implementation should require an exact slug and never list.
+  - name: count_topics_by_profession
+    description: Topic counts broken down by profession and B2C/B2B space — a catalog coverage summary.
+    rest:
+    - GET /api/topics/jobs/counts-by-space
+    confidence: high
+  - name: search_articles
+    description: Search the editorial article library behind santeacademie.com/media.
+    rest:
+    - GET /connector/api/search/article
+    confidence: medium
+    note: >-
+      The Connector spec declares the query as a single required parameter named after a PHP DTO class
+      (ArticleSearchQuery) with no schema, so the real input fields are undocumented. A tool cannot be given a correct
+      inputSchema from the published specification alone.
+  - name: get_article
+    description: Get one editorial article by slug.
+    rest:
+    - GET /connector/api/article/{slug}
+    confidence: high
+  - name: list_faq
+    description: List Santé Académie's published FAQ entries.
+    rest:
+    - GET /connector/api/faq
+    confidence: high
+  - name: list_funding_faq_and_testimonials
+    description: List published learner testimonials.
+    rest:
+    - GET /connector/api/testimonial
+    confidence: high
+    caution: >-
+      Testimonials carry named, photographed healthcare professionals. Surfacing them through an agent tool
+      redistributes identified personal data; a real implementation should consider whether that is intended.
+  - name: list_media_categories
+    description: List the article/media categories.
+    rest:
+    - GET /connector/api/media/category
+    confidence: high
+  - name: list_profession_spaces
+    description: List the profession spaces (B2C / B2B) used as a discriminator across the catalog.
+    rest:
+    - GET /connector/api/job/space
+    confidence: high
+  - name: enumerate_catalog_slugs
+    description: >-
+      Return sitemap source data — the cheapest way to enumerate every topic and article slug before calling the
+      per-slug lookups.
+    rest:
+    - GET /connector/api/sitemap
+    confidence: high
+  - name: search_pharmacies
+    description: Pharmacy lookup used in the enrollment flow.
+    rest:
+    - GET /connector/api/pharmacy/search
+    confidence: low
+    note: >-
+      Required parameter is the un-expanded DTO class name PharmacySearchQuery with no schema and no documentation.
+      Neither the input fields nor the response shape can be determined from anything public, so this tool cannot be
+      specified honestly today.
+  - name: search_health_facilities
+    description: Health-facility lookup used in the establishment (B2B) enrollment flow.
+    rest:
+    - GET /connector/api/health-facility/search
+    confidence: low
+    note: same generator artifact as search_pharmacies — HealthFacilitySearchQuery is un-expanded and undocumented.
+  coverage:
+    rest_operations_total: 24
+    tools_derived: 19
+    high_confidence: 16
+    medium_confidence: 1
+    low_confidence: 2
+    operations_unmapped: 0
+    note: >-
+      Tool count is below operation count because get_resource and get_custom_catalog each bind the equivalent
+      operation in BOTH APIs, and list_profession_spaces / list_professions collapse the Frontstage and Connector
+      profession endpoints.
+tool_crosswalk:
+  emitted: false
+  reason: >-
+    A ToolCrosswalk artifact binds a REAL MCP server's tools (or a GraphQL schema) to backing OpenAPI operations.
+    Santé Académie ships neither an MCP server nor a GraphQL endpoint, so there is nothing to cross-walk — a crosswalk
+    built from this candidate list would only restate the `rest:` bindings already recorded above and would read as
+    though a server existed.
+recommendations:
+- >-
+  If Santé Académie ever wants to be reachable by the assistants French healthcare professionals already use, this
+  catalog is the surface: it is already public, already read-only, needs no auth, and answers the questions
+  practitioners actually ask ("which funded DPC training exists for my profession this year?").
+- >-
+  Before exposing it, fix two things that the derivation above had to flag: expand the four DTO-class query
+  parameters so a tool can have a real inputSchema, and decide deliberately about custom-catalog slugs, trainer
+  biographies and testimonial photos, all of which are identified personal or customer data currently served without a
+  credential.

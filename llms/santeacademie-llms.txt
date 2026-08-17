@@ -1,0 +1,93 @@
+# Santé Académie
+
+> French continuing-professional-development (DPC) training provider for healthcare professionals — physicians,
+> nurses, pharmacists, pharmacy technicians, nursing assistants and health-facility training managers. Courses are
+> delivered as e-learning, virtual classrooms and in-person sessions, funded through ANDPC, FIF-PL, FAF-PM, ANFH and
+> OPCO schemes. Qualiopi-certified, registered with France Compétences, approved by the Agence Nationale du DPC.
+
+Santé Académie publishes no developer portal and no API program. It does, however, serve two unauthenticated
+read-only JSON catalog APIs from `frontstage.santeacademie.com` that back its own websites and learner app. Both
+publish a machine-readable OpenAPI description at a public URL. Everything below was fetched without credentials.
+
+- generated: 2026-08-17
+- method: generated
+- source: apis.yml + openapi/santeacademie-frontstage-openapi.json + openapi/santeacademie-connector-openapi.json + live probes
+
+## APIs
+
+- [Frontstage API — OpenAPI 3.1.0](https://frontstage.santeacademie.com/api/docs.jsonopenapi): API Platform (Symfony)
+  catalog API. 10 GET operations. Base `https://frontstage.santeacademie.com`. No securitySchemes; verified callable
+  anonymously. Swagger UI at https://frontstage.santeacademie.com/api/docs.html
+- [Connector API — OpenAPI 3.0.0](https://frontstage.santeacademie.com/connector/api/): swagger-php catalog/content
+  API on the same host. 14 GET operations, all with operationIds. Base `https://frontstage.santeacademie.com`.
+
+## Frontstage API operations
+
+- `GET /api/topics-search`: search training topics; filters `externalCode`, `topicJobs.job.externalCode`,
+  `topicThematics.thematic.id`, `topicCourses.course.virtualClassroom`, `topicCourses.course.qualifying`; sorts
+  `order[rank]`, `order[rankB2b]`; paginated with `page` / `itemsPerPage` / `pagination`.
+- `GET /api/topics-search/filters`: the facet values available to `/api/topics-search`.
+- `GET /api/topics/{slug}`: one training topic by slug.
+- `GET /api/topics/jobs/counts-by-space`: topic counts broken down by profession and B2C/B2B space.
+- `GET /api/resources-search`: search resources (webinars, articles, courses); filters `id`, `status`,
+  `resourceCategory.code`, `resourceJobs.space`, `resourceJobs.job.externalCode`, `resourceThematics.thematic.id`,
+  `private`; sorts `order[viewCounter]`, `order[rank]`.
+- `GET /api/resources-search/filters`: the facet values available to `/api/resources-search`.
+- `GET /api/resources/{slug}`: one resource by slug.
+- `GET /api/resources/{slug}/topics`: the training topics attached to a resource.
+- `GET /api/custom-catalogs/{slug}`: a customer-specific catalog (B2B) by slug, with its topics, FAQs and funding.
+- `GET /api/jobs`: the profession list (`externalCode` values such as `MED`, `INF`, `PHA`, `PPH`, `AIS`, `CADSANTE`),
+  each with its B2C/B2B space appellations and brand colours.
+
+## Connector API operations
+
+- `GET /connector/api/search/topic` (`searchTopic`): topic search.
+- `GET /connector/api/topic/{slug}` (`findTopic`): one topic by slug.
+- `GET /connector/api/search/article` (`searchArticle`): article search.
+- `GET /connector/api/article/{slug}` (`findArticle`): one article by slug.
+- `GET /connector/api/resource/{slug}` (`findResource`): one resource by slug.
+- `GET /connector/api/custom-catalog/{slug}` (`findCustomCatalog`): one custom catalog by slug.
+- `GET /connector/api/job` (`listJob`): profession list.
+- `GET /connector/api/job/space` (`listJobSpaces`): profession-space list (B2C / B2B).
+- `GET /connector/api/faq` (`listFaq`): published FAQ entries.
+- `GET /connector/api/testimonial` (`listTestimonial`): published learner testimonials.
+- `GET /connector/api/media/category` (`listMediaCategory`): media/article categories.
+- `GET /connector/api/sitemap` (`getSitemap`): sitemap feed data.
+- `GET /connector/api/pharmacy/search` (`searchPharmacy`): pharmacy lookup (`PharmacySearchQuery`).
+- `GET /connector/api/health-facility/search` (`searchHealthFacility`): health-facility lookup
+  (`HealthFacilitySearchQuery`).
+
+## Runtime semantics
+
+- Authentication: none. Both APIs declare an empty `components.securitySchemes` and answer anonymous GETs with 200.
+- Pagination (Frontstage collections): `{ elements[], currentPage, lastPage, itemsPerPage, totalItems }`; request
+  with `page`, `itemsPerPage`, or `pagination=false`.
+- Errors: Frontstage returns `application/problem+json` with `type` / `title` / `detail` (API Platform default, whose
+  `type` points at the RFC 2616 section rather than a real problem-type registry). Connector returns a bare JSON
+  string such as `"Topic not found"` with `content-type: application/json`.
+- Versioning: no version in the path or a header a caller can pin. Responses carry an informational
+  `x-version-id` (observed `v134`) and `x-project-name: frontstage`.
+- Rate limits: none documented and no `RateLimit-*`, `X-RateLimit-*` or `Retry-After` header observed on a live 200.
+- Caching: `ETag` plus `cache-control: no-cache, private` on Frontstage collections;
+  `cache-control: max-age=0, must-revalidate, private` on Connector reads.
+
+## Non-API surfaces
+
+- [Website](https://www.santeacademie.com/): course catalog by profession and format.
+- [Learner app](https://play.santeacademie.com/): where enrolled professionals take courses.
+- [Help center](https://support.santeacademie.com/fr/): Intercom-hosted; also serves its own auto-generated
+  `llms.txt` index of 25 French support articles, saved verbatim at `llms/santeacademie-support-llms.txt`.
+- [Funding simulator](https://simulateur.santeacademie.com/): estimates DPC / FIF-PL / FAF-PM eligibility.
+- [Status page](https://status.santeacademie.com/): Upbot-hosted; lists per-service uptime including `frontstage`.
+- [GitHub organization](https://github.com/santeacademie): 14 public repos of general-purpose engineering tooling
+  (Symfony bundles, a SCORM/H5P wrapper, a Munki console) — no API client SDK and no specification.
+- [Press room](https://santeacademie.notion.site/Sant-Acad-mie-Press-Room-d52a0a5c2b684582b3185d35e0e60eb7)
+
+## Not published
+
+- No developer portal, getting-started guide, changelog, pricing page for API access, or SDK.
+- No MCP server, no A2A agent card, no GraphQL endpoint (`/api/graphql` 404s), no AsyncAPI or webhook catalog.
+- No first-party `/.well-known/` document on any host (see `well-known/santeacademie-well-known.yml`).
+- Sibling internal services on the same domain are login-gated: `contentstudio.santeacademie.com/api/*` returns
+  401 `application/problem+json`, `backstage.santeacademie.com/api` returns 401, and `crossguard.santeacademie.com`
+  exposes no API route.

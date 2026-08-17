@@ -1,0 +1,317 @@
+generated: '2026-08-17'
+method: derived
+source: >-
+  openapi/santeacademie-frontstage-openapi.json (components.schemas $ref graph) +
+  openapi/santeacademie-connector-openapi.json + live responses from https://frontstage.santeacademie.com
+note: >-
+  Derived entirely from the $ref graph of the two published specifications and from real response bodies. Santé
+  Académie publishes no object reference, so nothing here is a documented claim — it is the shape the API actually
+  returns. Both APIs are read-only, so this is a read model: there is no create/update/delete path for any entity.
+identity_conventions:
+  primary_key:
+    style: slug
+    detail: >-
+      Every per-entity lookup in both APIs is keyed by a URL slug, not an id — /api/topics/{slug},
+      /api/resources/{slug}, /api/custom-catalogs/{slug}, /connector/api/topic/{slug}, /connector/api/article/{slug}.
+      Resource carries a numeric `id` as well and /api/resources-search can filter on it, but no endpoint resolves a
+      resource by id.
+  external_code:
+    style: opaque business code
+    detail: >-
+      Job, Topic, Course, Funding and Trainer each carry an `externalCode`. On Job these are the stable profession
+      codes every filter keys off — MED (médecin), INF (infirmier), PHA (pharmacien), PPH (préparateur en pharmacie),
+      AIS (aide-soignant), CADSANTE (cadre de santé) — verified live on GET /api/jobs. On the other entities the code
+      appears to reference Santé Académie's back-office and the DPC registry (Course also carries `refDpc`, the ANDPC
+      programme reference).
+  id_prefixes: none
+  no_uuids_observed: true
+  serialization_groups:
+    detail: >-
+      The same entity is returned with different property sets depending on the operation. API Platform serialization
+      groups are baked into the schema names — TopicRepresentation-topics.get vs TopicRepresentation-topics-search.get
+      vs Resource.TopicRepresentation-resources.get. A client must model per-operation representations, not one
+      canonical object. Entities below are collapsed to their business identity; the per-operation variants are noted
+      where the difference matters.
+entities:
+- name: Job
+  label: Healthcare profession (métier)
+  description: >-
+    The spine of the whole model. Every catalog filter, every space and every price is keyed off a profession code.
+  key: externalCode
+  fields: [externalCode, appellation, jobParent, jobSpaces, backgroundColor, foregroundColor, synapseColor]
+  operations:
+  - GET /api/jobs
+  - GET /connector/api/job
+  - GET /connector/api/job/space
+  variants: [JobRepresentation, Job.JobRepresentation, JobSmallRepresentation]
+  note: >-
+    `jobParent` is a self-reference by code — MED's jobParent is MED — which makes this a shallow profession
+    hierarchy. `jobSpaces` embeds a per-space (B2C/B2B) appellation and description, so the SAME profession is
+    presented differently to a self-employed practitioner than to a hospital training manager.
+- name: Space
+  label: Commercial space (B2C / B2B)
+  description: >-
+    Not a standalone resource but a discriminator that appears throughout — on JobSpace, ResourceJob, CustomCatalog
+    and the topic counts. Observed values B2C and B2B.
+  key: null
+  operations:
+  - GET /connector/api/job/space
+  - GET /api/topics/jobs/counts-by-space
+- name: Topic
+  label: Training topic (the DPC subject enrolled in)
+  key: slug
+  fields: [slug, externalCode, metaTitle, metaDescription, rank, rankB2b]
+  operations:
+  - GET /api/topics/{slug}
+  - GET /api/topics-search
+  - GET /connector/api/topic/{slug}
+  - GET /connector/api/search/topic
+  variants: [TopicRepresentation, Topic.TopicRepresentation, Resource.TopicRepresentation]
+  note: >-
+    Two independent ranks — `rank` and `rankB2b` — so editorial ordering differs by audience, and /api/topics-search
+    exposes both as sorts.
+- name: Course
+  label: A deliverable course inside a topic
+  key: externalCode
+  fields: [externalCode, name, shortName, description, duration, format, status, refDpc, qualifying, virtualClassroom, spaces, ogImage, presentationPortrait, presentationThumbnail, videoTeaser, videoPreview1, videoPreview2, videoPreview3, videoPreview4]
+  operations: []
+  reachable_via:
+  - GET /api/topics/{slug} (embedded through topicCourses)
+  - GET /api/custom-catalogs/{slug} (embedded)
+  note: >-
+    Has no endpoint of its own in either API — a course is only ever reachable embedded inside a topic or a custom
+    catalog. `refDpc` is the ANDPC programme reference, the identifier that ties the course to the national funding
+    registry. Four separate video-preview fields plus a teaser indicate a video-first delivery model.
+- name: Product
+  label: Priced, funded offer of a course for one profession
+  key: null
+  composite_key: [courseCode, jobCode, fundingCode]
+  fields: [courseCode, jobCode, fundingCode, price, compensation, status]
+  operations: []
+  reachable_via:
+  - GET /api/topics/{slug} (embedded through topicCourses -> course -> products)
+  note: >-
+    The most commercially revealing entity in the model and it has no endpoint. It is the cross-product of course x
+    profession x funding scheme, carrying both `price` (what the scheme pays) and `compensation` (the indemnity paid
+    to the professional for time spent). This is why the public website can say training is "100% pris en charge" with
+    no price shown: the price exists in the API but is settled against ANDPC / FIF-PL / FAF-PM, not the learner.
+- name: Funding
+  label: Funding scheme
+  key: externalCode
+  fields: [externalCode, name]
+  operations: []
+  reachable_via:
+  - GET /api/topics/{slug} (embedded through course.fundings)
+  - GET /api/custom-catalogs/{slug} (embedded)
+  note: Corresponds to the national schemes — ANDPC, FIF-PL, FAF-PM, ANFH, OPCO.
+- name: Trainer
+  label: Course trainer / expert
+  key: externalCode
+  fields: [externalCode, firstname, lastname, gender, honorificTitle, shortHonorificTitle, institution, tagLine, shortBiography, description, profilePicture, photoPortrait]
+  operations: []
+  reachable_via:
+  - GET /api/topics/{slug} (embedded through course.trainers)
+  - GET /api/resources/{slug} (embedded through resourceTrainers)
+  note: >-
+    Named individuals with institution and biography, returned publicly and unauthenticated. Personal data of
+    identified healthcare experts is part of the open catalog payload.
+- name: Resource
+  label: Content resource — webinar, article or course asset
+  key: slug
+  fields: [id, slug, title, caption, description, extract, contentUrl, displayUrl, actionValue, metaTitle, metaDescription, ogImage, duration, rank, viewCounter, scheduledAt, keyIndicators]
+  operations:
+  - GET /api/resources/{slug}
+  - GET /api/resources-search
+  - GET /api/resources/{slug}/topics
+  - GET /connector/api/resource/{slug}
+  variants: [ResourceRepresentation, Resource.ResourceRepresentation]
+  note: >-
+    `viewCounter` is returned publicly and is sortable via order[viewCounter], so the API exposes real engagement
+    counts per resource. `scheduledAt` plus a WEBINAR category makes this the closest thing to an events feed.
+- name: ResourceCategory
+  label: Resource category
+  key: code
+  fields: [code, name, ctaLabel, viewCounterLabel]
+  observed_values: [WEBINAR]
+  reachable_via:
+  - GET /api/resources-search/filters
+  - GET /connector/api/media/category
+  note: >-
+    Carries presentation strings (`ctaLabel` "S'inscrire", `viewCounterLabel` "participant") — the API returns
+    UI copy, not just data, which is a sign it was built for one first-party consumer rather than as a public contract.
+- name: Thematic
+  label: Clinical/subject theme
+  key: id
+  fields: [id, name]
+  reachable_via:
+  - GET /api/topics-search/filters
+  - GET /api/resources-search/filters
+  note: The only entity keyed by a bare integer id, and there is no endpoint to resolve one.
+- name: CustomCatalog
+  label: B2B customer-specific catalog page
+  key: slug
+  fields: [slug, title, shortTitle, pageName, description, theme, logo, space, actionType, jobsSelect, displayEntryDateSelect, displayServiceSelect, externalOrganizationId, ogTitle, ogDescription, openGraph]
+  operations:
+  - GET /api/custom-catalogs/{slug}
+  - GET /connector/api/custom-catalog/{slug}
+  note: >-
+    `externalOrganizationId` links a catalog to a named B2B customer in Santé Académie's back office. Any catalog slug
+    resolves anonymously, so a guessable or leaked slug exposes that customer's curated catalog, logo and theme.
+- name: Faq
+  label: FAQ entry
+  key: null
+  fields: [question, answer, homePage, displayCpts, displayDrh]
+  operations:
+  - GET /connector/api/faq
+  reachable_via:
+  - GET /api/custom-catalogs/{slug} (embedded)
+  note: Boolean placement flags (homePage, displayCpts, displayDrh) target the CPTS and DRH audience pages.
+- name: Article
+  label: Editorial article (the /media hub)
+  key: slug
+  operations:
+  - GET /connector/api/article/{slug}
+  - GET /connector/api/search/article
+  note: Connector-only. No Frontstage equivalent, and the schema is not broken out in the Frontstage document.
+- name: Testimonial
+  label: Learner testimonial
+  key: null
+  operations:
+  - GET /connector/api/testimonial
+  note: >-
+    Author pictures are served from frontstage.santeacademie.com/uploads/testimonial-*/, so the testimonial payload
+    carries images of identified healthcare professionals.
+- name: Pharmacy
+  label: Pharmacy record (lookup)
+  key: null
+  operations:
+  - GET /connector/api/pharmacy/search
+  note: >-
+    Connector-only lookup whose only parameter is the un-expanded DTO class name PharmacySearchQuery. The record shape
+    is not described anywhere public. Likely a registry-backed autocomplete used during enrollment.
+- name: HealthFacility
+  label: Health facility record (lookup)
+  key: null
+  operations:
+  - GET /connector/api/health-facility/search
+  note: >-
+    Same generator artifact — the only parameter is the DTO class name HealthFacilitySearchQuery. Used for the
+    establishment (B2B) enrollment path.
+relationships:
+- from: Topic
+  to: Course
+  type: has_many
+  via: topicCourses[].course
+  note: join representation TopicCourseRepresentation wraps each course
+- from: Topic
+  to: Job
+  type: has_many
+  via: topicJobs[].job
+  note: join representation TopicJobRepresentation; the topic is offered to these professions
+- from: Course
+  to: Trainer
+  type: has_many
+  via: trainers[]
+- from: Course
+  to: Funding
+  type: has_many
+  via: fundings[]
+- from: Course
+  to: Product
+  type: has_many
+  via: products[]
+- from: Product
+  to: Course
+  type: belongs_to
+  via: courseCode
+  note: reference by business code, not a $ref — the API returns no link to resolve it
+- from: Product
+  to: Job
+  type: belongs_to
+  via: jobCode
+  note: reference by externalCode
+- from: Product
+  to: Funding
+  type: belongs_to
+  via: fundingCode
+  note: reference by externalCode
+- from: Resource
+  to: Job
+  type: has_many
+  via: resourceJobs[].job
+  note: join representation ResourceJobRepresentation, which also carries `space`
+- from: Resource
+  to: Trainer
+  type: has_many
+  via: resourceTrainers[].trainer
+  note: join representation ResourceTrainerRepresentation, which also carries the boolean `trainerHost`
+- from: Resource
+  to: ResourceCategory
+  type: has_one
+  via: resourceCategory
+- from: Resource
+  to: Topic
+  type: has_many
+  via: GET /api/resources/{slug}/topics
+  note: the only relationship in either API exposed as its own sub-resource endpoint rather than an embed
+- from: CustomCatalog
+  to: Topic
+  type: has_many
+  via: customCatalogTopics[].topic
+  note: join representation CustomCatalogTopicRepresentation
+- from: CustomCatalog
+  to: Faq
+  type: has_many
+  via: faqs[]
+- from: CustomCatalog
+  to: Job
+  type: has_many
+  via: jobsSelect
+  note: array of profession codes, not embedded objects
+- from: Job
+  to: Job
+  type: belongs_to
+  via: jobParent
+  note: self-reference by externalCode; shallow hierarchy, often pointing at itself
+- from: Topic
+  to: Thematic
+  type: has_many
+  via: 'filter only (topicThematics.thematic.id on /api/topics-search)'
+  note: >-
+    The relationship is filterable but the thematic is NOT embedded in the topic representation — a client can filter
+    by theme but cannot read a topic's themes back from the topic payload.
+- from: Resource
+  to: Thematic
+  type: has_many
+  via: 'filter only (resourceThematics.thematic.id on /api/resources-search)'
+  note: same asymmetry as Topic
+collection_envelope:
+  frontstage: '{ elements[], currentPage, lastPage, itemsPerPage, totalItems }'
+  connector: bare array
+observed_scale:
+  resources: 608
+  evidence:
+    method: probed
+    url: https://frontstage.santeacademie.com/api/resources-search?itemsPerPage=1
+    http_status: 200
+    field: totalItems
+summary:
+  entities: 16
+  relationships: 19
+  entities_with_no_endpoint: 6
+  entities_with_no_endpoint_list: [Course, Product, Funding, Trainer, Thematic, Space]
+  write_operations: 0
+  join_representations: 6
+findings:
+- >-
+  Six of sixteen entities have no endpoint of their own — Course, Product, Funding, Trainer, Thematic and Space are
+  reachable only embedded inside a topic or catalog. An agent that wants the course catalogue must walk topics.
+- >-
+  Product is the pricing model (price + compensation per course x profession x funding scheme) and it is returned
+  publicly, unauthenticated, embedded in topic payloads, while the website publishes no prices at all.
+- >-
+  Trainer and Testimonial payloads carry named, photographed, identified healthcare professionals with institutions
+  and biographies, served without a credential.
+- >-
+  The Thematic relationship is filterable but not readable — a documented-looking asymmetry that will surprise any
+  client trying to render a topic's themes.

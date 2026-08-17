@@ -1,0 +1,123 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements — Santé Académie Frontstage API
+  version: 1.0.0
+extends: ../openapi/santeacademie-frontstage-openapi.json
+x-provenance:
+  generated: '2026-08-17'
+  method: generated
+  source: openapi/santeacademie-frontstage-openapi.json + live probes of https://frontstage.santeacademie.com
+  note: >-
+    The upstream document is saved verbatim and never mutated. Everything here is an API Evangelist enhancement.
+    The single most consequential one is servers[]: API Platform emits `{"url": "/"}`, which names no host, so a
+    consumer who downloads the spec cannot call the API. The real host is the host the spec is served from,
+    https://frontstage.santeacademie.com, confirmed by a live anonymous 200 on GET /api/jobs returning French
+    profession records (Médecin/MED) and by play.santeacademie.com's own bundle referencing that host.
+actions:
+- target: $
+  description: >-
+    Name the real API host. Upstream servers[] is a single relative entry whose url is "/", which is unusable
+    off-host.
+  update:
+    servers:
+    - url: https://frontstage.santeacademie.com
+      description: Production (the host that serves this specification)
+- target: $.info
+  description: >-
+    Upstream info carries an internal project name, an empty description and no contact. Identify the provider so a
+    consumer can tell whose API this is.
+  update:
+    title: Santé Académie Frontstage API
+    description: >-
+      Read-only JSON catalog API behind santeacademie.com and play.santeacademie.com. Covers training-topic and
+      resource search with facets, per-slug topic/resource/custom-catalog lookup, the healthcare-profession
+      (métier) list, and topic counts by B2C/B2B space. No authentication is required; all operations are GET.
+    x-internal-project-name: frontstage
+    x-provider: Santé Académie
+    contact:
+      name: Santé Académie
+      url: https://www.santeacademie.com/
+- target: $
+  description: >-
+    Record the observed runtime semantics that the specification does not state — no auth, the collection envelope,
+    the error media type, and the absence of any rate-limit signal.
+  update:
+    x-api-evangelist:
+      authentication: none
+      authentication_verified: anonymous GET /api/jobs returned HTTP 200 on 2026-08-17
+      pagination:
+        style: page-number
+        request: page, itemsPerPage, pagination
+        response_fields: [elements, currentPage, lastPage, itemsPerPage, totalItems]
+      errors:
+        media_type: application/problem+json
+        shape: [type, title, detail]
+        note: >-
+          API Platform default. `type` is https://tools.ietf.org/html/rfc2616#section-10, an RFC 2616 section
+          reference rather than a dereferenceable problem type, so it is not usefully RFC 9457-conformant.
+      rate_limits: none documented; no RateLimit-*, X-RateLimit-* or Retry-After header observed
+      response_headers_observed: [etag, cache-control, x-project-name, x-version-id]
+      versioning: none a caller can pin; x-version-id (observed v134) is informational only
+- target: $.paths['/api/jobs'].get
+  description: >-
+    Replace the API Platform auto-generated operationId (`api_jobs_get_collection`) with a readable one and describe
+    the real payload, which upstream leaves empty. The generated ids are stable but unusable as tool or method names —
+    `api_resources_slugtopics_get`, `api_topicsjobscounts-by-space_get` — so every operation below is renamed. The
+    upstream ids are recorded in skills/_index.yml so nothing is lost.
+  update:
+    operationId: listJobs
+    summary: List healthcare professions (métiers)
+    description: >-
+      Returns the profession list that every other filter keys off. Each record carries externalCode (MED, INF,
+      PHA, PPH, AIS, CADSANTE …), appellation, jobParent, brand colours and the per-space (B2C/B2B) appellation and
+      description. Call this first to learn the externalCode values accepted by topics-search and resources-search.
+- target: $.paths['/api/topics-search'].get
+  update:
+    operationId: searchTopics
+    summary: Search training topics
+- target: $.paths['/api/topics-search/filters'].get
+  update:
+    operationId: getTopicSearchFilters
+    summary: Available facet values for topic search
+- target: $.paths['/api/topics/{slug}'].get
+  update:
+    operationId: getTopic
+    summary: Get one training topic by slug
+- target: $.paths['/api/topics/jobs/counts-by-space'].get
+  update:
+    operationId: getTopicCountsByJobAndSpace
+    summary: Topic counts by profession and space
+- target: $.paths['/api/resources-search'].get
+  update:
+    operationId: searchResources
+    summary: Search resources (webinars, articles, courses)
+- target: $.paths['/api/resources-search/filters'].get
+  update:
+    operationId: getResourceSearchFilters
+    summary: Available facet values for resource search
+- target: $.paths['/api/resources/{slug}'].get
+  update:
+    operationId: getResource
+    summary: Get one resource by slug
+- target: $.paths['/api/resources/{slug}/topics'].get
+  update:
+    operationId: getResourceTopics
+    summary: List the training topics attached to a resource
+- target: $.paths['/api/custom-catalogs/{slug}'].get
+  update:
+    operationId: getCustomCatalog
+    summary: Get a B2B custom catalog by slug
+- target: $
+  description: >-
+    Declare the tag set. Upstream ships an empty tags[] even though every operation belongs to one of four clear
+    resource families, which is why the spec cannot be split or navigated as published.
+  update:
+    tags:
+    - name: Topics
+      description: Training topics — the DPC subject a professional enrolls in
+    - name: Resources
+      description: Resources — webinars, articles and courses attached to topics
+    - name: CustomCatalogs
+      description: Customer-specific (B2B) catalogs of topics, FAQs and funding options
+    - name: Jobs
+      description: Healthcare professions (métiers) and their B2C/B2B spaces
