@@ -19,6 +19,17 @@ created: '2026-08-17'
 modified: '2026-08-17'
 tags:
 - Company
+- EdTech
+- Healthcare Training
+- Continuing Education
+- DPC
+- E-Learning
+- France
+- Healthcare Professionals
+- Course Catalog
+- LMS
+tags_raw:
+- Company
 - Edtech
 - healthcare-training
 - continuing-education
@@ -39,6 +50,13 @@ apis:
   humanURL: https://frontstage.santeacademie.com/api/docs.html
   baseURL: https://frontstage.santeacademie.com
   tags:
+  - Course Catalog
+  - Healthcare Training
+  - DPC
+  - Continuing Education
+  - France
+  - Search
+  tags_raw:
   - course-catalog
   - healthcare-training
   - dpc
@@ -72,6 +90,12 @@ apis:
   humanURL: https://frontstage.santeacademie.com/connector/api/
   baseURL: https://frontstage.santeacademie.com
   tags:
+  - Course Catalog
+  - Healthcare Training
+  - content-api
+  - Search
+  - France
+  tags_raw:
   - course-catalog
   - healthcare-training
   - content-api
