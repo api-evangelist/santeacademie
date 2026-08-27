@@ -40,36 +40,18 @@ tags_raw:
 - course-catalog
 - lms
 apis:
-- name: Santé Académie Frontstage API
-  description: >-
-    Read-only JSON catalog API built on API Platform (Symfony) that backs the santeacademie.com websites and the
-    play.santeacademie.com learner app. Ten GET operations cover training-topic and resource search with faceted
-    filters, per-slug topic/resource/custom-catalog lookup, the profession (métier) list, and topic counts by
-    B2C/B2B space. Served unauthenticated; collections use an elements/currentPage/lastPage/itemsPerPage/totalItems
-    envelope and errors are returned as application/problem+json.
+- aid: santeacademie:santeacademie-article-api
+  name: Santé Académie Article API
+  description: Article
   humanURL: https://frontstage.santeacademie.com/api/docs.html
   baseURL: https://frontstage.santeacademie.com
   tags:
-  - Course Catalog
-  - Healthcare Training
-  - DPC
-  - Continuing Education
-  - France
-  - Search
-  tags_raw:
-  - course-catalog
-  - healthcare-training
-  - dpc
-  - continuing-education
-  - france
-  - search
+  - Article
   properties:
   - type: OpenAPI
-    url: openapi/santeacademie-frontstage-openapi.json
+    url: openapi/santeacademie-article-api-openapi.yml
   - type: APIReference
     url: https://frontstage.santeacademie.com/api/docs.html
-  - type: Overlay
-    url: overlays/santeacademie-frontstage-overlay.yaml
   - type: Authentication
     url: authentication/santeacademie-authentication.yml
   - type: Conventions
@@ -80,32 +62,238 @@ apis:
     url: data-model/santeacademie-data-model.yml
   - type: RateLimits
     url: rate-limits/santeacademie-rate-limits.yml
-- name: Santé Académie Connector API
-  description: >-
-    Read-only JSON "connector" API generated with swagger-php on the same frontstage host, used by the marketing
-    site and funding simulator. Fourteen GET operations cover article and topic search, per-slug article, topic,
-    resource and custom-catalog lookup, the FAQ, testimonial, profession, job-space and media-category lists, a
-    sitemap feed, and pharmacy / health-facility search. Served unauthenticated; errors are returned as a bare JSON
-    string rather than problem+json.
-  humanURL: https://frontstage.santeacademie.com/connector/api/
+- aid: santeacademie:santeacademie-customcatalog-api
+  name: Santé Académie Custom Catalog API
+  description: CustomCatalog
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
   baseURL: https://frontstage.santeacademie.com
   tags:
-  - Course Catalog
-  - Healthcare Training
-  - content-api
-  - Search
-  - France
-  tags_raw:
-  - course-catalog
-  - healthcare-training
-  - content-api
-  - search
-  - france
+  - CustomCatalog
   properties:
   - type: OpenAPI
-    url: openapi/santeacademie-connector-openapi.json
-  - type: Overlay
-    url: overlays/santeacademie-connector-overlay.yaml
+    url: openapi/santeacademie-customcatalog-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-faq-api
+  name: Santé Académie Faq API
+  description: Faq
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Faq
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-faq-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-health-facility-api
+  name: Santé Académie Health Facility API
+  description: Health Facility
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Health Facility
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-health-facility-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-job-api
+  name: Santé Académie Job API
+  description: Job
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Job
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-job-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-jobspace-api
+  name: Santé Académie Job Space API
+  description: JobSpace
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - JobSpace
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-jobspace-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-mediacategory-api
+  name: Santé Académie Media Category API
+  description: MediaCategory
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - MediaCategory
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-mediacategory-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-pharmacy-api
+  name: Santé Académie Pharmacy API
+  description: Pharmacy
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Pharmacy
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-pharmacy-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-resource-api
+  name: Santé Académie Resource API
+  description: Resource
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Resource
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-resource-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-sitemap-api
+  name: Santé Académie Sitemap API
+  description: Sitemap
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Sitemap
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-sitemap-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-testimonial-api
+  name: Santé Académie Testimonial API
+  description: Testimonial
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Testimonial
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-testimonial-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
+  - type: Authentication
+    url: authentication/santeacademie-authentication.yml
+  - type: Conventions
+    url: conventions/santeacademie-conventions.yml
+  - type: ErrorCatalog
+    url: errors/santeacademie-problem-types.yml
+  - type: DataModel
+    url: data-model/santeacademie-data-model.yml
+  - type: RateLimits
+    url: rate-limits/santeacademie-rate-limits.yml
+- aid: santeacademie:santeacademie-topic-api
+  name: Santé Académie Topic API
+  description: Topic
+  humanURL: https://frontstage.santeacademie.com/api/docs.html
+  baseURL: https://frontstage.santeacademie.com
+  tags:
+  - Topic
+  properties:
+  - type: OpenAPI
+    url: openapi/santeacademie-topic-api-openapi.yml
+  - type: APIReference
+    url: https://frontstage.santeacademie.com/api/docs.html
   - type: Authentication
     url: authentication/santeacademie-authentication.yml
   - type: Conventions
@@ -122,6 +310,10 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: Overlay
+  url: overlays/santeacademie-frontstage-overlay.yaml
+- type: Overlay
+  url: overlays/santeacademie-connector-overlay.yaml
 - type: Website
   url: https://www.santeacademie.com/
 - type: Login
