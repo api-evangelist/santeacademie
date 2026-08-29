@@ -10,6 +10,18 @@ description: >-
   frontstage.santeacademie.com — the API Platform "Frontstage API" and a swagger-php "Connector API" — which expose
   the training catalog (topics, resources, courses, trainers, funding schemes, professions/métiers, FAQs,
   testimonials, pharmacy and health-facility lookup) that powers its own websites and learner app.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://www.santeacademie.com/favicon.ico
 url: https://raw.githubusercontent.com/api-evangelist/santeacademie/refs/heads/main/apis.yml
 x-type: company
