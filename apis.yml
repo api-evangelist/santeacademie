@@ -322,6 +322,9 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: CapabilityMap
+  url: capabilities/santeacademie-capability-edges.yml
+  name: Santé Académie Business Capability Map
 - type: Overlay
   url: overlays/santeacademie-frontstage-overlay.yaml
 - type: Overlay
