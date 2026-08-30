@@ -1,0 +1,220 @@
+openapi: 3.2.0
+info:
+  title: api Article API
+  description: api description
+  version: '1.0'
+tags:
+- name: Article
+  description: Article
+paths:
+  /connector/api/article/{slug}:
+    get:
+      tags:
+      - Article
+      description: Return the JSON containing article search
+      operationId: findArticle
+      parameters:
+      - name: slug
+        in: path
+        description: Slug of the Article on Frontstage
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
+  /connector/api/search/article:
+    get:
+      tags:
+      - Article
+      description: Return the JSON containing article search
+      operationId: searchArticle
+      parameters:
+      - name: ArticleSearchQuery
+        in: query
+        description: Query for article search
+        required: true
+        schema:
+          $ref: '#/components/schemas/ArticleSearchQuery'
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArticleSearch'
+components:
+  schemas:
+    MediaCategory:
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        pluralName:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        ogImageUrl:
+          type:
+          - string
+          - 'null'
+        metaTitle:
+          type:
+          - string
+          - 'null'
+        metaDescription:
+          type:
+          - string
+          - 'null'
+        iconName:
+          type:
+          - string
+          - 'null'
+        colorName:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
+    ArticleSearch:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        page:
+          type: integer
+        total_items:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    ArticleSearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        orderBy:
+          description: Key is the field (publishedAtDate), value is 'asc' or 'desc'
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          enum:
+          - asc
+          - desc
+          example: '[''publishedAtDate'' => ''asc'']'
+        limit:
+          type:
+          - string
+          - 'null'
+        page:
+          type:
+          - string
+          - 'null'
+        status:
+          description: Status of the article
+          type:
+          - string
+          - 'null'
+          example: published
+        id:
+          description: Array of IDs
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          example: '[1, 2, 3]'
+        idNe:
+          description: Array of IDs to exclude
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+          example: '[4, 5, 6]'
+        categoryId:
+          description: ID of the category
+          type:
+          - integer
+          - 'null'
+          example: '1'
+      type: object
+      writeOnly: true
+    Article:
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        title:
+          type: string
+        readingTime:
+          type:
+          - integer
+          - 'null'
+        shortTitle:
+          type: string
+        description:
+          type: string
+        body:
+          type: string
+        metaTitle:
+          type: string
+        metaDescription:
+          type: string
+        coverUrl:
+          type:
+          - string
+          - 'null'
+        ogImageUrl:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        status:
+          type:
+          - string
+          - 'null'
+        publishedAtDate:
+          type:
+          - string
+          - 'null'
+        publishedAtTimestamp:
+          type:
+          - integer
+          - 'null'
+        updatedAtDate:
+          type:
+          - string
+          - 'null'
+        category:
+          oneOf:
+          - $ref: '#/components/schemas/MediaCategory'
+        articleRedirect:
+          type:
+          - string
+          - 'null'
+        topics:
+          description: TopicHitOutput>
+        resources:
+          description: ResourceRepresentation>
+        authors:
+          description: MediaAuthorOutput>
+        relatedArticles:
+          description: ArticleOutput>
+      type: object
+      readOnly: true

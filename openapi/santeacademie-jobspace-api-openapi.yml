@@ -1,0 +1,42 @@
+openapi: 3.2.0
+info:
+  title: api Job Space API
+  description: api description
+  version: '1.0'
+tags:
+- name: JobSpace
+  description: JobSpace
+paths:
+  /connector/api/job/space:
+    get:
+      tags:
+      - JobSpace
+      description: Return the JSON containing jobs spaces list
+      operationId: listJobSpaces
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/JobSpace'
+components:
+  schemas:
+    JobSpace:
+      properties:
+        jobCode:
+          type: string
+        appellation:
+          type:
+          - string
+          - 'null'
+        spaceCode:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true

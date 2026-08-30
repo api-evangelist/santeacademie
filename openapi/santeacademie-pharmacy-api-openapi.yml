@@ -1,0 +1,110 @@
+openapi: 3.2.0
+info:
+  title: api Pharmacy API
+  description: api description
+  version: '1.0'
+tags:
+- name: Pharmacy
+  description: Pharmacy
+paths:
+  /connector/api/pharmacy/search:
+    get:
+      tags:
+      - Pharmacy
+      description: Return the JSON containing pharmacy search
+      operationId: searchPharmacy
+      parameters:
+      - name: PharmacySearchQuery
+        in: query
+        description: Query to search for pharmacies
+        required: true
+        schema:
+          $ref: '#/components/schemas/PharmacySearchQuery'
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PharmacySearchResult'
+components:
+  schemas:
+    PharmacySearchResult:
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/PharmacySearchResultItem'
+        query:
+          type: string
+        processingTimeMs:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        estimatedTotalHits:
+          type: integer
+      type: object
+    PharmacySearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        limit:
+          type:
+          - integer
+          - 'null'
+        offset:
+          type:
+          - integer
+          - 'null'
+      type: object
+    PharmacySearchResultItem:
+      properties:
+        rs:
+          type: string
+        siret:
+          type: string
+        address:
+          type: string
+        nofinesset:
+          type: string
+        nofinessej:
+          type: string
+        rslongue:
+          type: string
+        complrs:
+          type: string
+        compldistrib:
+          type: string
+        numvoie:
+          type: string
+        typvoie:
+          type: string
+        voie:
+          type: string
+        compvoie:
+          type: string
+        lieuditbp:
+          type: string
+        commune:
+          type: string
+        departement:
+          type: string
+        libdepartement:
+          type: string
+        ligneacheminement:
+          type: string
+        telephone:
+          type: string
+        categetab:
+          type: string
+        libcategetab:
+          type: string
+        categagretab:
+          type: string
+        libcategagretab:
+          type: string
+      type: object

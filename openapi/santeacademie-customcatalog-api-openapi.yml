@@ -1,0 +1,533 @@
+openapi: 3.2.0
+info:
+  title: Santeacademie Custom Catalog API
+  version: '1.0'
+  description: 'Operations tagged CustomCatalog across 2 of this provider''s published API definitions: santeacademie-connector-openapi.json, santeacademie-frontstage-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: /
+  description: ''
+tags:
+- name: CustomCatalog
+  description: CustomCatalog
+paths:
+  /connector/api/custom-catalog/{slug}:
+    get:
+      tags:
+      - CustomCatalog
+      description: Return the JSON containing custom catalog search
+      operationId: findCustomCatalog
+      parameters:
+      - name: slug
+        in: path
+        description: Slug of the Custom Catalog on Frontstage
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomCatalog'
+  /api/custom-catalogs/{slug}:
+    parameters: []
+    get:
+      operationId: api_custom-catalogs_slug_get
+      tags:
+      - CustomCatalog
+      responses:
+        '200':
+          description: CustomCatalog resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomCatalog.CustomCatalogRepresentation-custom-catalogs.get'
+            text/html:
+              schema:
+                $ref: '#/components/schemas/CustomCatalog.CustomCatalogRepresentation-custom-catalogs.get'
+        '404':
+          description: Resource not found
+      summary: Retrieves a CustomCatalog resource.
+      description: Retrieves a CustomCatalog resource.
+      parameters:
+      - name: slug
+        in: path
+        description: CustomCatalog identifier
+        required: true
+        deprecated: false
+        allowEmptyValue: false
+        schema:
+          type: string
+        style: simple
+        explode: false
+        allowReserved: false
+      deprecated: false
+    servers:
+    - url: /
+      description: ''
+components:
+  schemas:
+    TopicHit:
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        shortname:
+          type: string
+        jobs:
+          type: array
+          items:
+            type: string
+          example: '[''MED'', ''INF'']'
+        fundings:
+          type: array
+          items:
+            type: string
+          example: '[''DPC'', ''OPCO'']'
+        isQualifying:
+          type: boolean
+        hasEnabledTopicFormatRemoteElearning:
+          type: boolean
+        hasEnabledTopicFormatPhysicalClassroom:
+          type: boolean
+        hasEnabledTopicFormatVirtualClassroom:
+          type: boolean
+        hasEnabledTopicFormatBusiness:
+          type: boolean
+        hasEnabledTopicFormatBlendedLearning:
+          type: boolean
+        duration:
+          type:
+          - integer
+          - 'null'
+        isNew:
+          type: boolean
+        slug:
+          type: string
+        isEarlybird:
+          type: boolean
+        thumbnail:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        tag:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
+    CustomCatalog:
+      properties:
+        pageName:
+          type: string
+        title:
+          type: string
+        shortTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        theme:
+          type: string
+          enum:
+          - santeacademie
+          - twenty_four_seven_services
+        logo:
+          type:
+          - string
+          - 'null'
+        actionType:
+          type: string
+        externalOrganizationId:
+          type:
+          - integer
+          - 'null'
+        displayServiceSelect:
+          type: boolean
+        displayEntryDateSelect:
+          type: boolean
+        jobsSelect:
+          description: 'array{externalCode: string|null, appellation: string|null}>'
+          type: array
+          items:
+            properties:
+              externalCode:
+                description: 'array{externalCode: string|null, appellation: string|null}>'
+                type: string
+              appellation:
+                description: 'array{externalCode: string|null, appellation: string|null}>'
+                type: string
+            type: object
+        openGraph:
+          type:
+          - string
+          - 'null'
+        ogTitle:
+          type:
+          - string
+          - 'null'
+        thumbnailOpenGraph:
+          type:
+          - string
+          - 'null'
+        ogDescription:
+          type:
+          - string
+          - 'null'
+        topics:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicHit'
+        faqs:
+          type: array
+          items: {}
+        space:
+          type:
+          - string
+          - 'null'
+        registrationFlow:
+          type: string
+        registrationFlowExternalUrl:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
+    JobRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+    FundingRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+    CustomCatalog.CustomCatalogRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        pageName:
+          type: string
+        space:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+        shortTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        theme:
+          type: string
+        logo:
+          type:
+          - string
+          - 'null'
+        actionType:
+          type: string
+        externalOrganizationId:
+          type:
+          - integer
+          - 'null'
+        displayServiceSelect:
+          type: boolean
+        displayEntryDateSelect:
+          type: boolean
+        jobsSelect:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        openGraph:
+          type:
+          - string
+          - 'null'
+        ogTitle:
+          type:
+          - string
+          - 'null'
+        ogDescription:
+          type:
+          - string
+          - 'null'
+        customCatalogTopics:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomCatalogTopicRepresentation-custom-catalogs.get'
+        faqs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaqRepresentation-custom-catalogs.get'
+    TopicCourseRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        course:
+          $ref: '#/components/schemas/CourseRepresentation-custom-catalogs.get'
+    CustomCatalogTopicRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        topic:
+          $ref: '#/components/schemas/TopicRepresentation-custom-catalogs.get'
+    TopicJobRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        job:
+          $ref: '#/components/schemas/JobRepresentation-custom-catalogs.get'
+    FaqRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+        homePage:
+          type: boolean
+        displayCpts:
+          type: boolean
+        displayDrh:
+          type: boolean
+    TrainerRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        honorificTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        firstname:
+          type: string
+        shortHonorificTitle:
+          type:
+          - string
+          - 'null'
+        shortBiography:
+          type:
+          - string
+          - 'null'
+        lastname:
+          type: string
+        institution:
+          type:
+          - string
+          - 'null'
+        gender:
+          type:
+          - string
+          - 'null'
+        tagLine:
+          type:
+          - string
+          - 'null'
+        profilePicture:
+          type:
+          - string
+          - 'null'
+        photoPortrait:
+          type:
+          - string
+          - 'null'
+    TopicRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        rankB2b:
+          type:
+          - integer
+          - 'null'
+        slug:
+          type:
+          - string
+          - 'null'
+        metaTitle:
+          type:
+          - string
+          - 'null'
+        metaDescription:
+          type:
+          - string
+          - 'null'
+        topicCourses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicCourseRepresentation-custom-catalogs.get'
+        topicJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicJobRepresentation-custom-catalogs.get'
+    CourseRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        shortName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        duration:
+          oneOf:
+          - type:
+            - integer
+            - 'null'
+          - type:
+            - number
+            - 'null'
+        format:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+        presentationThumbnail:
+          type:
+          - string
+          - 'null'
+        presentationPortrait:
+          type:
+          - string
+          - 'null'
+        qualifying:
+          type: boolean
+        virtualClassroom:
+          type: boolean
+        ogImage:
+          type:
+          - string
+          - 'null'
+        refDpc:
+          type:
+          - string
+          - 'null'
+        videoTeaser:
+          type:
+          - string
+          - 'null'
+        videoPreview1:
+          type:
+          - string
+          - 'null'
+        videoPreview2:
+          type:
+          - string
+          - 'null'
+        videoPreview3:
+          type:
+          - string
+          - 'null'
+        videoPreview4:
+          type:
+          - string
+          - 'null'
+        spaces:
+          type: array
+          items:
+            type: string
+        fundings:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundingRepresentation-custom-catalogs.get'
+        trainers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainerRepresentation-custom-catalogs.get'
+x-refined-from:
+- santeacademie-connector-openapi.json
+- santeacademie-frontstage-openapi.json

@@ -1,0 +1,62 @@
+openapi: 3.2.0
+info:
+  title: api Media Category API
+  description: api description
+  version: '1.0'
+tags:
+- name: MediaCategory
+  description: MediaCategory
+paths:
+  /connector/api/media/category:
+    get:
+      tags:
+      - MediaCategory
+      description: Return the JSON containing media category list
+      operationId: listMediaCategory
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MediaCategory'
+components:
+  schemas:
+    MediaCategory:
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        pluralName:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        ogImageUrl:
+          type:
+          - string
+          - 'null'
+        metaTitle:
+          type:
+          - string
+          - 'null'
+        metaDescription:
+          type:
+          - string
+          - 'null'
+        iconName:
+          type:
+          - string
+          - 'null'
+        colorName:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true

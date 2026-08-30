@@ -1,0 +1,110 @@
+openapi: 3.2.0
+info:
+  title: api Health Facility API
+  description: api description
+  version: '1.0'
+tags:
+- name: Health Facility
+  description: Health Facility
+paths:
+  /connector/api/health-facility/search:
+    get:
+      tags:
+      - Health Facility
+      description: Return the JSON containing health facility search
+      operationId: searchHealthFacility
+      parameters:
+      - name: HealthFacilitySearchQuery
+        in: query
+        description: Query to search for health facilities
+        required: true
+        schema:
+          $ref: '#/components/schemas/HealthFacilitySearchQuery'
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthFacilitySearchResult'
+components:
+  schemas:
+    HealthFacilitySearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        limit:
+          type:
+          - integer
+          - 'null'
+        offset:
+          type:
+          - integer
+          - 'null'
+      type: object
+    HealthFacilitySearchResultItem:
+      properties:
+        rs:
+          type: string
+        siret:
+          type: string
+        address:
+          type: string
+        nofinesset:
+          type: string
+        nofinessej:
+          type: string
+        rslongue:
+          type: string
+        complrs:
+          type: string
+        compldistrib:
+          type: string
+        numvoie:
+          type: string
+        typvoie:
+          type: string
+        voie:
+          type: string
+        compvoie:
+          type: string
+        lieuditbp:
+          type: string
+        commune:
+          type: string
+        departement:
+          type: string
+        libdepartement:
+          type: string
+        ligneacheminement:
+          type: string
+        telephone:
+          type: string
+        categetab:
+          type: string
+        libcategetab:
+          type: string
+        categagretab:
+          type: string
+        libcategagretab:
+          type: string
+      type: object
+    HealthFacilitySearchResult:
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthFacilitySearchResultItem'
+        query:
+          type: string
+        processingTimeMs:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        estimatedTotalHits:
+          type: integer
+      type: object

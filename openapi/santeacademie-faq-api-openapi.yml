@@ -1,0 +1,42 @@
+openapi: 3.2.0
+info:
+  title: api Faq API
+  description: api description
+  version: '1.0'
+tags:
+- name: Faq
+  description: Faq
+paths:
+  /connector/api/faq:
+    get:
+      tags:
+      - Faq
+      description: Return the JSON containing faqs list
+      operationId: listFaq
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Faq'
+components:
+  schemas:
+    Faq:
+      properties:
+        id:
+          type: integer
+        question:
+          type: string
+        answer:
+          type: string
+        homePage:
+          type: boolean
+        displayCpts:
+          type: boolean
+        displayDrh:
+          type: boolean
+      type: object
+      readOnly: true

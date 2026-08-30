@@ -1,0 +1,66 @@
+openapi: 3.2.0
+info:
+  title: api Testimonial API
+  description: api description
+  version: '1.0'
+tags:
+- name: Testimonial
+  description: Testimonial
+paths:
+  /connector/api/testimonial:
+    get:
+      tags:
+      - Testimonial
+      description: Return the JSON containing testimonial list
+      operationId: listTestimonial
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Testimonial'
+components:
+  schemas:
+    Testimonial:
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        firstname:
+          type: string
+        lastname:
+          type: string
+        city:
+          type: string
+        zipcode:
+          type: string
+        content:
+          type: string
+        videoPreview:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        jobLabel:
+          type:
+          - string
+          - 'null'
+        jobs:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        authorPictureUrl:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true

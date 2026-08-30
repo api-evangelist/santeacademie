@@ -1,0 +1,180 @@
+openapi: 3.2.0
+info:
+  title: Santeacademie Job API
+  version: '1.0'
+  description: 'Operations tagged Job across 2 of this provider''s published API definitions: santeacademie-connector-openapi.json, santeacademie-frontstage-openapi.json. Each path carries the servers of the definition it was published in.'
+servers:
+- url: /
+  description: ''
+tags:
+- name: Job
+  description: Job
+paths:
+  /connector/api/job:
+    get:
+      tags:
+      - Job
+      description: Return the JSON containing jobs list
+      operationId: listJob
+      responses:
+        '200':
+          description: The response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job'
+  /api/jobs:
+    parameters: []
+    get:
+      operationId: api_jobs_get_collection
+      tags:
+      - Job
+      responses:
+        '200':
+          description: Job collection
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job.JobRepresentation-jobs.get'
+            text/html:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Job.JobRepresentation-jobs.get'
+      summary: Retrieves the collection of Job resources.
+      description: Retrieves the collection of Job resources.
+      parameters:
+      - name: page
+        in: query
+        description: The collection page number
+        required: false
+        deprecated: false
+        allowEmptyValue: true
+        schema:
+          type: integer
+          default: 1
+        style: form
+        explode: false
+        allowReserved: false
+      - name: itemsPerPage
+        in: query
+        description: The number of items per page
+        required: false
+        deprecated: false
+        allowEmptyValue: true
+        schema:
+          type: integer
+          default: 10
+          minimum: 0
+        style: form
+        explode: false
+        allowReserved: false
+      - name: pagination
+        in: query
+        description: Enable or disable pagination
+        required: false
+        deprecated: false
+        allowEmptyValue: true
+        schema:
+          type: boolean
+        style: form
+        explode: false
+        allowReserved: false
+      - name: exists[jobParent]
+        in: query
+        description: ''
+        required: false
+        deprecated: false
+        allowEmptyValue: true
+        schema:
+          type: boolean
+        style: form
+        explode: false
+        allowReserved: false
+      deprecated: false
+    servers:
+    - url: /
+      description: ''
+components:
+  schemas:
+    Job:
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type:
+          - string
+          - 'null'
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type: array
+          items:
+            properties:
+              space:
+                type: string
+              appellation:
+                type: string
+              description:
+                type: string
+            type: object
+      type: object
+      readOnly: true
+    Job.JobRepresentation-jobs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+x-refined-from:
+- santeacademie-connector-openapi.json
+- santeacademie-frontstage-openapi.json

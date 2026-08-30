@@ -1,0 +1,22 @@
+openapi: 3.2.0
+info:
+  title: api Sitemap API
+  description: api description
+  version: '1.0'
+tags:
+- name: Sitemap
+  description: Sitemap
+paths:
+  /connector/api/sitemap:
+    get:
+      tags:
+      - Sitemap
+      description: Return the sitemap data
+      operationId: getSitemap
+      responses:
+        '200':
+          description: The sitemap data
+          content:
+            application/json:
+              schema:
+                type: object
