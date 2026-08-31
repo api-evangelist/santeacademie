@@ -31,15 +31,15 @@ created: '2026-08-17'
 modified: '2026-08-17'
 tags:
 - Company
-- EdTech
-- Healthcare Training
-- Continuing Education
-- DPC
-- E-Learning
-- France
-- Healthcare Professionals
-- Course Catalog
-- LMS
+- Edtech
+- healthcare-training
+- continuing-education
+- dpc
+- e-learning
+- france
+- healthcare-professionals
+- course-catalog
+- lms
 tags_raw:
 - Company
 - Edtech
@@ -102,6 +102,8 @@ apis:
   humanURL: https://frontstage.santeacademie.com/api/docs.html
   baseURL: https://frontstage.santeacademie.com
   tags:
+  - FAQ
+  tags_raw:
   - Faq
   properties:
   - type: OpenAPI
