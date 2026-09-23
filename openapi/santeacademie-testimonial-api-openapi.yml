@@ -22,6 +22,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Testimonial'
+      summary: List testimonial
+      x-summary-source: derived
 components:
   schemas:
     Testimonial:

@@ -25,6 +25,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Job'
+      summary: List job
+      x-summary-source: derived
   /api/jobs:
     parameters: []
     get:
@@ -45,7 +47,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Job.JobRepresentation-jobs.get'
-      summary: Retrieves the collection of Job resources.
+      summary: Retrieves the collection of Job resources
       description: Retrieves the collection of Job resources.
       parameters:
       - name: page

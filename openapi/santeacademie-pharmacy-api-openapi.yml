@@ -27,6 +27,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PharmacySearchResult'
+      summary: Search pharmacy
+      x-summary-source: derived
 components:
   schemas:
     PharmacySearchResult:
@@ -45,21 +47,6 @@ components:
           type: integer
         estimatedTotalHits:
           type: integer
-      type: object
-    PharmacySearchQuery:
-      properties:
-        query:
-          type:
-          - string
-          - 'null'
-        limit:
-          type:
-          - integer
-          - 'null'
-        offset:
-          type:
-          - integer
-          - 'null'
       type: object
     PharmacySearchResultItem:
       properties:
@@ -107,4 +94,19 @@ components:
           type: string
         libcategagretab:
           type: string
+      type: object
+    PharmacySearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        limit:
+          type:
+          - integer
+          - 'null'
+        offset:
+          type:
+          - integer
+          - 'null'
       type: object

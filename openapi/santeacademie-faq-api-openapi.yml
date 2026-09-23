@@ -4,13 +4,13 @@ info:
   description: api description
   version: '1.0'
 tags:
-- name: Faq
+- name: FAQ
   description: Faq
 paths:
   /connector/api/faq:
     get:
       tags:
-      - Faq
+      - FAQ
       description: Return the JSON containing faqs list
       operationId: listFaq
       responses:
@@ -22,6 +22,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Faq'
+      summary: List faq
+      x-summary-source: derived
 components:
   schemas:
     Faq:

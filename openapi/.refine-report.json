@@ -1,0 +1,55 @@
+{
+  "provider": "santeacademie",
+  "sources": [
+    "_original/santeacademie-connector-openapi.json",
+    "_original/santeacademie-frontstage-openapi.json"
+  ],
+  "outputs": [
+    "santeacademie-article-api-openapi.yml",
+    "santeacademie-customcatalog-api-openapi.yml",
+    "santeacademie-faq-api-openapi.yml",
+    "santeacademie-health-facility-api-openapi.yml",
+    "santeacademie-job-api-openapi.yml",
+    "santeacademie-jobspace-api-openapi.yml",
+    "santeacademie-mediacategory-api-openapi.yml",
+    "santeacademie-pharmacy-api-openapi.yml",
+    "santeacademie-resource-api-openapi.yml",
+    "santeacademie-sitemap-api-openapi.yml",
+    "santeacademie-testimonial-api-openapi.yml",
+    "santeacademie-topic-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "2 archived document(s) dropped as subsets of other archived documents",
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "santeacademie-connector-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "santeacademie-frontstage-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "santeacademie-frontstage-openapi.json: declared missing tag: CustomCatalog",
+    "santeacademie-frontstage-openapi.json: declared missing tag: Job",
+    "santeacademie-frontstage-openapi.json: declared missing tag: Resource",
+    "santeacademie-frontstage-openapi.json: declared missing tag: Topic",
+    "tag 'CustomCatalog' spans 2 source specs (santeacademie-connector-openapi.json, santeacademie-frontstage-openapi.json): per-path servers applied",
+    "tag 'Job' spans 2 source specs (santeacademie-connector-openapi.json, santeacademie-frontstage-openapi.json): per-path servers applied",
+    "tag 'Resource' spans 2 source specs (santeacademie-connector-openapi.json, santeacademie-frontstage-openapi.json): per-path servers applied",
+    "tag 'Topic' spans 2 source specs (santeacademie-connector-openapi.json, santeacademie-frontstage-openapi.json): per-path servers applied",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "_original/santeacademie-frontstage-openapi_2.json: archived document superseded by a larger archived document",
+    "_original/santeacademie-connector-openapi_2.json: archived document superseded by a larger archived document",
+    "santeacademie-article-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-customcatalog-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-faq-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-health-facility-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-job-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-jobspace-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-mediacategory-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-pharmacy-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-resource-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-sitemap-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-testimonial-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "santeacademie-topic-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
+}

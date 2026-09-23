@@ -22,6 +22,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/MediaCategory'
+      summary: List media category
+      x-summary-source: derived
 components:
   schemas:
     MediaCategory:

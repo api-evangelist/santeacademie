@@ -27,23 +27,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/HealthFacilitySearchResult'
+      summary: Search health facility
+      x-summary-source: derived
 components:
   schemas:
-    HealthFacilitySearchQuery:
-      properties:
-        query:
-          type:
-          - string
-          - 'null'
-        limit:
-          type:
-          - integer
-          - 'null'
-        offset:
-          type:
-          - integer
-          - 'null'
-      type: object
     HealthFacilitySearchResultItem:
       properties:
         rs:
@@ -107,4 +94,19 @@ components:
           type: integer
         estimatedTotalHits:
           type: integer
+      type: object
+    HealthFacilitySearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        limit:
+          type:
+          - integer
+          - 'null'
+        offset:
+          type:
+          - integer
+          - 'null'
       type: object

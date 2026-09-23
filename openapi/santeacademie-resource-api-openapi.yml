@@ -30,6 +30,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Topic'
+      summary: Find resource
+      x-summary-source: derived
   /api/resources-search:
     parameters: []
     get:
@@ -50,7 +52,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Resource.CollectionResourceSearchRepresentation-resources-search.get'
-      summary: Retrieves the collection of Resource resources.
+      summary: Retrieves the collection of Resource resources
       description: Retrieves the collection of Resource resources.
       parameters:
       - name: page
@@ -294,7 +296,7 @@ paths:
                 $ref: '#/components/schemas/Resource.ResourceSearchFilterRepresentation-resources-search.get'
         '404':
           description: Resource not found
-      summary: Retrieves a Resource resource.
+      summary: Retrieves a Resource resource
       description: Retrieves a Resource resource.
       parameters: []
       deprecated: false
@@ -319,7 +321,7 @@ paths:
                 $ref: '#/components/schemas/Resource.ResourceRepresentation-resources.get'
         '404':
           description: Resource not found
-      summary: Retrieves a Resource resource.
+      summary: Retrieves a Resource resource
       description: Retrieves a Resource resource.
       parameters:
       - name: slug
@@ -355,7 +357,7 @@ paths:
                 $ref: '#/components/schemas/Resource.TopicRepresentation-resources.get'
         '404':
           description: Resource not found
-      summary: Retrieves a Resource resource.
+      summary: Retrieves a Resource resource
       description: Retrieves a Resource resource.
       parameters:
       - name: slug
@@ -375,6 +377,54 @@ paths:
       description: ''
 components:
   schemas:
+    Trainer:
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        firstname:
+          type: string
+        lastname:
+          type: string
+        shortBiography:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        picture:
+          type:
+          - string
+          - 'null'
+        institution:
+          type:
+          - string
+          - 'null'
+        honorificTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        shortHonorificTitle:
+          type:
+          - string
+          - 'null'
+        gender:
+          type:
+          - string
+          - 'null'
+        tagLine:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
     Topic:
       properties:
         code:
@@ -489,54 +539,6 @@ components:
             $ref: '#/components/schemas/Trainer'
       type: object
       readOnly: true
-    Trainer:
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        firstname:
-          type: string
-        lastname:
-          type: string
-        shortBiography:
-          type:
-          - string
-          - 'null'
-        bio:
-          type:
-          - string
-          - 'null'
-        picture:
-          type:
-          - string
-          - 'null'
-        institution:
-          type:
-          - string
-          - 'null'
-        honorificTitle:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        shortHonorificTitle:
-          type:
-          - string
-          - 'null'
-        gender:
-          type:
-          - string
-          - 'null'
-        tagLine:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
     TopicFormat:
       properties:
         id:
@@ -610,145 +612,6 @@ components:
       properties:
         course:
           $ref: '#/components/schemas/CourseRepresentation-resources.get'
-    FundingRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-    ResourceCategorySmallRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-    ResourceTrainerRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        trainer:
-          $ref: '#/components/schemas/TrainerRepresentation-resources.get'
-        trainerHost:
-          type: boolean
-    JobRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-        jobParent:
-          type:
-          - string
-          - 'null'
-        backgroundColor:
-          type:
-          - string
-          - 'null'
-        foregroundColor:
-          type:
-          - string
-          - 'null'
-        synapseColor:
-          type:
-          - string
-          - 'null'
-        jobSpaces:
-          type:
-          - array
-          - 'null'
-          items:
-            type: array
-            items:
-              type: string
-    ThematicRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-    ResourceJobRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        job:
-          $ref: '#/components/schemas/JobRepresentation-resources.get'
-        space:
-          type: string
-    TrainerRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        honorificTitle:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        firstname:
-          type: string
-        shortHonorificTitle:
-          type:
-          - string
-          - 'null'
-        shortBiography:
-          type:
-          - string
-          - 'null'
-        lastname:
-          type: string
-        institution:
-          type:
-          - string
-          - 'null'
-        gender:
-          type:
-          - string
-          - 'null'
-        tagLine:
-          type:
-          - string
-          - 'null'
-        profilePicture:
-          type:
-          - string
-          - 'null'
-        photoPortrait:
-          type:
-          - string
-          - 'null'
     Resource.CollectionResourceSearchRepresentation-resources-search.get:
       type: object
       description: ''
@@ -772,96 +635,6 @@ components:
           - 'null'
         totalItems:
           type: number
-    Resource.TopicRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        rank:
-          type:
-          - integer
-          - 'null'
-        rankB2b:
-          type:
-          - integer
-          - 'null'
-        slug:
-          type:
-          - string
-          - 'null'
-        metaTitle:
-          type:
-          - string
-          - 'null'
-        metaDescription:
-          type:
-          - string
-          - 'null'
-        topicCourses:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopicCourseRepresentation-resources.get'
-        topicJobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopicJobRepresentation-resources.get'
-    ResourceRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        slug:
-          type:
-          - string
-          - 'null'
-        caption:
-          type:
-          - string
-          - 'null'
-        resourceCategory:
-          anyOf:
-          - $ref: '#/components/schemas/ResourceCategoryRepresentation-resources-search.get'
-          - type: 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        displayUrl:
-          type:
-          - string
-          - 'null'
-        viewCounter:
-          type:
-          - integer
-          - 'null'
-        rank:
-          type:
-          - integer
-          - 'null'
-        actionValue:
-          type:
-          - string
-          - 'null'
-        scheduledAt:
-          type:
-          - string
-          - 'null'
-        resourceJobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceJobRepresentation-resources-search.get'
     TopicJobRepresentation-resources.get:
       type: object
       description: ''
@@ -869,105 +642,6 @@ components:
       properties:
         job:
           $ref: '#/components/schemas/JobRepresentation-resources.get'
-    JobRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-        jobParent:
-          type:
-          - string
-          - 'null'
-        backgroundColor:
-          type:
-          - string
-          - 'null'
-        foregroundColor:
-          type:
-          - string
-          - 'null'
-        synapseColor:
-          type:
-          - string
-          - 'null'
-        jobSpaces:
-          type:
-          - array
-          - 'null'
-          items:
-            type: array
-            items:
-              type: string
-    ProductRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        courseCode:
-          type:
-          - string
-          - 'null'
-        jobCode:
-          type:
-          - string
-          - 'null'
-        fundingCode:
-          type:
-          - string
-          - 'null'
-        price:
-          type: number
-        compensation:
-          type: number
-        status:
-          type: string
-    ResourceCategoryRepresentation-resources.get:
-      type: object
-      description: ''
-      deprecated: false
-    ResourceJobRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        job:
-          $ref: '#/components/schemas/JobRepresentation-resources-search.get'
-        space:
-          type: string
-    JobSmallRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-    Resource.ResourceSearchFilterRepresentation-resources-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        categories:
-          type: array
-          items:
-            $ref: '#/components/schemas/ResourceCategorySmallRepresentation-resources-search.get'
-        jobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobSmallRepresentation-resources-search.get'
-        thematics:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThematicRepresentation-resources-search.get'
     CourseRepresentation-resources.get:
       type: object
       description: ''
@@ -1041,6 +715,204 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductRepresentation-resources.get'
+    Resource.TopicRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        rankB2b:
+          type:
+          - integer
+          - 'null'
+        slug:
+          type:
+          - string
+          - 'null'
+        metaTitle:
+          type:
+          - string
+          - 'null'
+        metaDescription:
+          type:
+          - string
+          - 'null'
+        topicCourses:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicCourseRepresentation-resources.get'
+        topicJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicJobRepresentation-resources.get'
+    JobRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+    Resource.ResourceSearchFilterRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceCategorySmallRepresentation-resources-search.get'
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobSmallRepresentation-resources-search.get'
+        thematics:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThematicRepresentation-resources-search.get'
+    ResourceJobRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        job:
+          $ref: '#/components/schemas/JobRepresentation-resources-search.get'
+        space:
+          type: string
+    ProductRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        courseCode:
+          type:
+          - string
+          - 'null'
+        jobCode:
+          type:
+          - string
+          - 'null'
+        fundingCode:
+          type:
+          - string
+          - 'null'
+        price:
+          type: number
+        compensation:
+          type: number
+        status:
+          type: string
+    ThematicRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    ResourceJobRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        job:
+          $ref: '#/components/schemas/JobRepresentation-resources.get'
+        space:
+          type: string
+    ResourceTrainerRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        trainer:
+          $ref: '#/components/schemas/TrainerRepresentation-resources.get'
+        trainerHost:
+          type: boolean
+    JobRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+    FundingRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
     ResourceCategoryRepresentation-resources-search.get:
       type: object
       description: ''
@@ -1062,6 +934,83 @@ components:
           type:
           - string
           - 'null'
+    ResourceCategorySmallRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    JobSmallRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+    ResourceRepresentation-resources-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        slug:
+          type:
+          - string
+          - 'null'
+        caption:
+          type:
+          - string
+          - 'null'
+        resourceCategory:
+          anyOf:
+          - $ref: '#/components/schemas/ResourceCategoryRepresentation-resources-search.get'
+          - type: 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        displayUrl:
+          type:
+          - string
+          - 'null'
+        viewCounter:
+          type:
+          - integer
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        actionValue:
+          type:
+          - string
+          - 'null'
+        scheduledAt:
+          type:
+          - string
+          - 'null'
+        resourceJobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/ResourceJobRepresentation-resources-search.get'
     Resource.ResourceRepresentation-resources.get:
       type: object
       description: ''
@@ -1141,6 +1090,59 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ResourceTrainerRepresentation-resources.get'
+    TrainerRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        honorificTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        firstname:
+          type: string
+        shortHonorificTitle:
+          type:
+          - string
+          - 'null'
+        shortBiography:
+          type:
+          - string
+          - 'null'
+        lastname:
+          type: string
+        institution:
+          type:
+          - string
+          - 'null'
+        gender:
+          type:
+          - string
+          - 'null'
+        tagLine:
+          type:
+          - string
+          - 'null'
+        profilePicture:
+          type:
+          - string
+          - 'null'
+        photoPortrait:
+          type:
+          - string
+          - 'null'
+    ResourceCategoryRepresentation-resources.get:
+      type: object
+      description: ''
+      deprecated: false
 x-refined-from:
 - santeacademie-connector-openapi.json
 - santeacademie-frontstage-openapi.json
