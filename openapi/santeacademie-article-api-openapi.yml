@@ -53,6 +53,42 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    MediaCategory:
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        pluralName:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        ogImageUrl:
+          type:
+          - string
+          - 'null'
+        metaTitle:
+          type:
+          - string
+          - 'null'
+        metaDescription:
+          type:
+          - string
+          - 'null'
+        iconName:
+          type:
+          - string
+          - 'null'
+        colorName:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
     ArticleSearch:
       properties:
         items:
@@ -129,42 +165,6 @@ components:
           description: MediaAuthorOutput>
         relatedArticles:
           description: ArticleOutput>
-      type: object
-      readOnly: true
-    MediaCategory:
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type: string
-        pluralName:
-          type:
-          - string
-          - 'null'
-        slug:
-          type: string
-        ogImageUrl:
-          type:
-          - string
-          - 'null'
-        metaTitle:
-          type:
-          - string
-          - 'null'
-        metaDescription:
-          type:
-          - string
-          - 'null'
-        iconName:
-          type:
-          - string
-          - 'null'
-        colorName:
-          type:
-          - string
-          - 'null'
       type: object
       readOnly: true
     ArticleSearchQuery:

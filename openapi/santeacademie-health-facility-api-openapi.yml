@@ -31,6 +31,38 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    HealthFacilitySearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        limit:
+          type:
+          - integer
+          - 'null'
+        offset:
+          type:
+          - integer
+          - 'null'
+      type: object
+    HealthFacilitySearchResult:
+      properties:
+        hits:
+          type: array
+          items:
+            $ref: '#/components/schemas/HealthFacilitySearchResultItem'
+        query:
+          type: string
+        processingTimeMs:
+          type: integer
+        limit:
+          type: integer
+        offset:
+          type: integer
+        estimatedTotalHits:
+          type: integer
+      type: object
     HealthFacilitySearchResultItem:
       properties:
         rs:
@@ -77,36 +109,4 @@ components:
           type: string
         libcategagretab:
           type: string
-      type: object
-    HealthFacilitySearchResult:
-      properties:
-        hits:
-          type: array
-          items:
-            $ref: '#/components/schemas/HealthFacilitySearchResultItem'
-        query:
-          type: string
-        processingTimeMs:
-          type: integer
-        limit:
-          type: integer
-        offset:
-          type: integer
-        estimatedTotalHits:
-          type: integer
-      type: object
-    HealthFacilitySearchQuery:
-      properties:
-        query:
-          type:
-          - string
-          - 'null'
-        limit:
-          type:
-          - integer
-          - 'null'
-        offset:
-          type:
-          - integer
-          - 'null'
       type: object
