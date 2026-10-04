@@ -70,6 +70,62 @@ paths:
       description: ''
 components:
   schemas:
+    TopicHit:
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        shortname:
+          type: string
+        jobs:
+          type: array
+          items:
+            type: string
+          example: '[''MED'', ''INF'']'
+        fundings:
+          type: array
+          items:
+            type: string
+          example: '[''DPC'', ''OPCO'']'
+        isQualifying:
+          type: boolean
+        hasEnabledTopicFormatRemoteElearning:
+          type: boolean
+        hasEnabledTopicFormatPhysicalClassroom:
+          type: boolean
+        hasEnabledTopicFormatVirtualClassroom:
+          type: boolean
+        hasEnabledTopicFormatBusiness:
+          type: boolean
+        hasEnabledTopicFormatBlendedLearning:
+          type: boolean
+        duration:
+          type:
+          - integer
+          - 'null'
+        isNew:
+          type: boolean
+        slug:
+          type: string
+        isEarlybird:
+          type: boolean
+        thumbnail:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        tag:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
     CustomCatalog:
       properties:
         pageName:
@@ -152,202 +208,6 @@ components:
           - 'null'
       type: object
       readOnly: true
-    TopicHit:
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        shortname:
-          type: string
-        jobs:
-          type: array
-          items:
-            type: string
-          example: '[''MED'', ''INF'']'
-        fundings:
-          type: array
-          items:
-            type: string
-          example: '[''DPC'', ''OPCO'']'
-        isQualifying:
-          type: boolean
-        hasEnabledTopicFormatRemoteElearning:
-          type: boolean
-        hasEnabledTopicFormatPhysicalClassroom:
-          type: boolean
-        hasEnabledTopicFormatVirtualClassroom:
-          type: boolean
-        hasEnabledTopicFormatBusiness:
-          type: boolean
-        hasEnabledTopicFormatBlendedLearning:
-          type: boolean
-        duration:
-          type:
-          - integer
-          - 'null'
-        isNew:
-          type: boolean
-        slug:
-          type: string
-        isEarlybird:
-          type: boolean
-        thumbnail:
-          type:
-          - string
-          - 'null'
-        rank:
-          type:
-          - integer
-          - 'null'
-        tag:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
-    FaqRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        question:
-          type: string
-        answer:
-          type: string
-        homePage:
-          type: boolean
-        displayCpts:
-          type: boolean
-        displayDrh:
-          type: boolean
-    TopicCourseRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        course:
-          $ref: '#/components/schemas/CourseRepresentation-custom-catalogs.get'
-    CustomCatalog.CustomCatalogRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        pageName:
-          type: string
-        space:
-          type:
-          - string
-          - 'null'
-        title:
-          type: string
-        shortTitle:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        slug:
-          type: string
-        theme:
-          type: string
-        logo:
-          type:
-          - string
-          - 'null'
-        actionType:
-          type: string
-        externalOrganizationId:
-          type:
-          - integer
-          - 'null'
-        displayServiceSelect:
-          type: boolean
-        displayEntryDateSelect:
-          type: boolean
-        jobsSelect:
-          type: array
-          items:
-            type: array
-            items:
-              type: string
-        openGraph:
-          type:
-          - string
-          - 'null'
-        ogTitle:
-          type:
-          - string
-          - 'null'
-        ogDescription:
-          type:
-          - string
-          - 'null'
-        customCatalogTopics:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomCatalogTopicRepresentation-custom-catalogs.get'
-        faqs:
-          type: array
-          items:
-            $ref: '#/components/schemas/FaqRepresentation-custom-catalogs.get'
-    TopicJobRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        job:
-          $ref: '#/components/schemas/JobRepresentation-custom-catalogs.get'
-    JobRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-        jobParent:
-          type:
-          - string
-          - 'null'
-        backgroundColor:
-          type:
-          - string
-          - 'null'
-        foregroundColor:
-          type:
-          - string
-          - 'null'
-        synapseColor:
-          type:
-          - string
-          - 'null'
-        jobSpaces:
-          type:
-          - array
-          - 'null'
-          items:
-            type: array
-            items:
-              type: string
-    FundingRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
     CourseRepresentation-custom-catalogs.get:
       type: object
       description: ''
@@ -437,6 +297,88 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TrainerRepresentation-custom-catalogs.get'
+    CustomCatalogTopicRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        topic:
+          $ref: '#/components/schemas/TopicRepresentation-custom-catalogs.get'
+    FaqRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        question:
+          type: string
+        answer:
+          type: string
+        homePage:
+          type: boolean
+        displayCpts:
+          type: boolean
+        displayDrh:
+          type: boolean
+    TopicJobRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        job:
+          $ref: '#/components/schemas/JobRepresentation-custom-catalogs.get'
+    TopicCourseRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        course:
+          $ref: '#/components/schemas/CourseRepresentation-custom-catalogs.get'
+    FundingRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+    JobRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
     TrainerRepresentation-custom-catalogs.get:
       type: object
       description: ''
@@ -486,6 +428,71 @@ components:
           type:
           - string
           - 'null'
+    CustomCatalog.CustomCatalogRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        pageName:
+          type: string
+        space:
+          type:
+          - string
+          - 'null'
+        title:
+          type: string
+        shortTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        theme:
+          type: string
+        logo:
+          type:
+          - string
+          - 'null'
+        actionType:
+          type: string
+        externalOrganizationId:
+          type:
+          - integer
+          - 'null'
+        displayServiceSelect:
+          type: boolean
+        displayEntryDateSelect:
+          type: boolean
+        jobsSelect:
+          type: array
+          items:
+            type: array
+            items:
+              type: string
+        openGraph:
+          type:
+          - string
+          - 'null'
+        ogTitle:
+          type:
+          - string
+          - 'null'
+        ogDescription:
+          type:
+          - string
+          - 'null'
+        customCatalogTopics:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomCatalogTopicRepresentation-custom-catalogs.get'
+        faqs:
+          type: array
+          items:
+            $ref: '#/components/schemas/FaqRepresentation-custom-catalogs.get'
     TopicRepresentation-custom-catalogs.get:
       type: object
       description: ''
@@ -523,13 +530,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TopicJobRepresentation-custom-catalogs.get'
-    CustomCatalogTopicRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        topic:
-          $ref: '#/components/schemas/TopicRepresentation-custom-catalogs.get'
 x-refined-from:
 - santeacademie-connector-openapi.json
 - santeacademie-frontstage-openapi.json

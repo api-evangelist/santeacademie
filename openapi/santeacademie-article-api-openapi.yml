@@ -53,55 +53,6 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    MediaCategory:
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type: string
-        pluralName:
-          type:
-          - string
-          - 'null'
-        slug:
-          type: string
-        ogImageUrl:
-          type:
-          - string
-          - 'null'
-        metaTitle:
-          type:
-          - string
-          - 'null'
-        metaDescription:
-          type:
-          - string
-          - 'null'
-        iconName:
-          type:
-          - string
-          - 'null'
-        colorName:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
-    ArticleSearch:
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Article'
-        page:
-          type: integer
-        total_items:
-          type: integer
-        last_page:
-          type: integer
-      type: object
     Article:
       properties:
         id:
@@ -165,6 +116,55 @@ components:
           description: MediaAuthorOutput>
         relatedArticles:
           description: ArticleOutput>
+      type: object
+      readOnly: true
+    ArticleSearch:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Article'
+        page:
+          type: integer
+        total_items:
+          type: integer
+        last_page:
+          type: integer
+      type: object
+    MediaCategory:
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type: string
+        pluralName:
+          type:
+          - string
+          - 'null'
+        slug:
+          type: string
+        ogImageUrl:
+          type:
+          - string
+          - 'null'
+        metaTitle:
+          type:
+          - string
+          - 'null'
+        metaDescription:
+          type:
+          - string
+          - 'null'
+        iconName:
+          type:
+          - string
+          - 'null'
+        colorName:
+          type:
+          - string
+          - 'null'
       type: object
       readOnly: true
     ArticleSearchQuery:

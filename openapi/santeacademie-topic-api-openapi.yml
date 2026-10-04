@@ -327,176 +327,6 @@ paths:
       description: ''
 components:
   schemas:
-    TopicHit:
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        shortname:
-          type: string
-        jobs:
-          type: array
-          items:
-            type: string
-          example: '[''MED'', ''INF'']'
-        fundings:
-          type: array
-          items:
-            type: string
-          example: '[''DPC'', ''OPCO'']'
-        isQualifying:
-          type: boolean
-        hasEnabledTopicFormatRemoteElearning:
-          type: boolean
-        hasEnabledTopicFormatPhysicalClassroom:
-          type: boolean
-        hasEnabledTopicFormatVirtualClassroom:
-          type: boolean
-        hasEnabledTopicFormatBusiness:
-          type: boolean
-        hasEnabledTopicFormatBlendedLearning:
-          type: boolean
-        duration:
-          type:
-          - integer
-          - 'null'
-        isNew:
-          type: boolean
-        slug:
-          type: string
-        isEarlybird:
-          type: boolean
-        thumbnail:
-          type:
-          - string
-          - 'null'
-        rank:
-          type:
-          - integer
-          - 'null'
-        tag:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
-    TopicFormat:
-      properties:
-        id:
-          type: integer
-        format:
-          type: string
-        status:
-          type: string
-          enum:
-          - enabled
-          - disabled
-        fundings:
-          type: array
-          items:
-            type: string
-          example: '[''OPCO'', ''DPC'']'
-        courseCode:
-          type:
-          - string
-          - 'null'
-        argumentFunding:
-          type:
-          - string
-          - 'null'
-        argumentValidating:
-          type:
-          - string
-          - 'null'
-        argumentCompensation:
-          type:
-          - string
-          - 'null'
-        argumentResources:
-          type:
-          - string
-          - 'null'
-        argumentDuration:
-          type:
-          - string
-          - 'null'
-        educationalMilestoneLink:
-          type:
-          - string
-          - 'null'
-        refDpc:
-          type:
-          - string
-          - 'null'
-        hasVirtualClassroom:
-          type: boolean
-        registrationFlow:
-          type: string
-          enum:
-          - gateway
-          - modal
-          - external_url
-        registrationFlowExternalUrl:
-          type:
-          - string
-          - 'null'
-        timeline:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
-    Trainer:
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        firstname:
-          type: string
-        lastname:
-          type: string
-        shortBiography:
-          type:
-          - string
-          - 'null'
-        bio:
-          type:
-          - string
-          - 'null'
-        picture:
-          type:
-          - string
-          - 'null'
-        institution:
-          type:
-          - string
-          - 'null'
-        honorificTitle:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        shortHonorificTitle:
-          type:
-          - string
-          - 'null'
-        gender:
-          type:
-          - string
-          - 'null'
-        tagLine:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
     TopicSearchQuery:
       properties:
         query:
@@ -616,17 +446,72 @@ components:
           - 'null'
       type: object
       writeOnly: true
-    TopicSearch:
+    TopicFormat:
       properties:
-        items:
+        id:
+          type: integer
+        format:
+          type: string
+        status:
+          type: string
+          enum:
+          - enabled
+          - disabled
+        fundings:
           type: array
           items:
-            $ref: '#/components/schemas/TopicHit'
-        page:
-          type: integer
-        total_items:
-          type: integer
+            type: string
+          example: '[''OPCO'', ''DPC'']'
+        courseCode:
+          type:
+          - string
+          - 'null'
+        argumentFunding:
+          type:
+          - string
+          - 'null'
+        argumentValidating:
+          type:
+          - string
+          - 'null'
+        argumentCompensation:
+          type:
+          - string
+          - 'null'
+        argumentResources:
+          type:
+          - string
+          - 'null'
+        argumentDuration:
+          type:
+          - string
+          - 'null'
+        educationalMilestoneLink:
+          type:
+          - string
+          - 'null'
+        refDpc:
+          type:
+          - string
+          - 'null'
+        hasVirtualClassroom:
+          type: boolean
+        registrationFlow:
+          type: string
+          enum:
+          - gateway
+          - modal
+          - external_url
+        registrationFlowExternalUrl:
+          type:
+          - string
+          - 'null'
+        timeline:
+          type:
+          - string
+          - 'null'
       type: object
+      readOnly: true
     Topic:
       properties:
         code:
@@ -741,13 +626,275 @@ components:
             $ref: '#/components/schemas/Trainer'
       type: object
       readOnly: true
-    TopicCourseRepresentation-topics-search.get:
+    TopicSearch:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicHit'
+        page:
+          type: integer
+        total_items:
+          type: integer
+      type: object
+    TopicHit:
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+        shortname:
+          type: string
+        jobs:
+          type: array
+          items:
+            type: string
+          example: '[''MED'', ''INF'']'
+        fundings:
+          type: array
+          items:
+            type: string
+          example: '[''DPC'', ''OPCO'']'
+        isQualifying:
+          type: boolean
+        hasEnabledTopicFormatRemoteElearning:
+          type: boolean
+        hasEnabledTopicFormatPhysicalClassroom:
+          type: boolean
+        hasEnabledTopicFormatVirtualClassroom:
+          type: boolean
+        hasEnabledTopicFormatBusiness:
+          type: boolean
+        hasEnabledTopicFormatBlendedLearning:
+          type: boolean
+        duration:
+          type:
+          - integer
+          - 'null'
+        isNew:
+          type: boolean
+        slug:
+          type: string
+        isEarlybird:
+          type: boolean
+        thumbnail:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        tag:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
+    Trainer:
+      properties:
+        code:
+          type:
+          - string
+          - 'null'
+        firstname:
+          type: string
+        lastname:
+          type: string
+        shortBiography:
+          type:
+          - string
+          - 'null'
+        bio:
+          type:
+          - string
+          - 'null'
+        picture:
+          type:
+          - string
+          - 'null'
+        institution:
+          type:
+          - string
+          - 'null'
+        honorificTitle:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        shortHonorificTitle:
+          type:
+          - string
+          - 'null'
+        gender:
+          type:
+          - string
+          - 'null'
+        tagLine:
+          type:
+          - string
+          - 'null'
+      type: object
+      readOnly: true
+    TopicJobRepresentation-topics.get:
       type: object
       description: ''
       deprecated: false
       properties:
-        course:
-          $ref: '#/components/schemas/CourseRepresentation-topics-search.get'
+        job:
+          $ref: '#/components/schemas/JobRepresentation-topics.get'
+    ProductRepresentation-topics.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        courseCode:
+          type:
+          - string
+          - 'null'
+        jobCode:
+          type:
+          - string
+          - 'null'
+        fundingCode:
+          type:
+          - string
+          - 'null'
+        price:
+          type: number
+        compensation:
+          type: number
+        status:
+          type: string
+    TopicJobRepresentation-topics-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        job:
+          $ref: '#/components/schemas/JobRepresentation-topics-search.get'
+    JobSmallRepresentation-topics-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+    ThematicRepresentation-topics-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        id:
+          type:
+          - integer
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+    FundingRepresentation-topics-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
+    Topic.CollectionTopicSearchRepresentation-topics-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        elements:
+          type: array
+          items:
+            $ref: '#/components/schemas/TopicRepresentation-topics-search.get'
+        currentPage:
+          type:
+          - integer
+          - 'null'
+        lastPage:
+          type:
+          - integer
+          - 'null'
+        itemsPerPage:
+          type:
+          - integer
+          - 'null'
+        totalItems:
+          type: integer
+    JobRepresentation-topics.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
+    Topic.TopicSearchFilterRepresentation-topics-search.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        jobs:
+          type: array
+          items:
+            $ref: '#/components/schemas/JobSmallRepresentation-topics-search.get'
+        thematics:
+          type: array
+          items:
+            $ref: '#/components/schemas/ThematicRepresentation-topics-search.get'
+    FundingRepresentation-topics.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type: string
     CourseRepresentation-topics.get:
       type: object
       description: ''
@@ -841,13 +988,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ProductRepresentation-topics.get'
-    TopicJobRepresentation-topics-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        job:
-          $ref: '#/components/schemas/JobRepresentation-topics-search.get'
     Topic.TopicRepresentation-topics.get:
       type: object
       description: ''
@@ -885,53 +1025,13 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TopicJobRepresentation-topics.get'
-    Topic.TopicSearchFilterRepresentation-topics-search.get:
+    TopicCourseRepresentation-topics-search.get:
       type: object
       description: ''
       deprecated: false
       properties:
-        jobs:
-          type: array
-          items:
-            $ref: '#/components/schemas/JobSmallRepresentation-topics-search.get'
-        thematics:
-          type: array
-          items:
-            $ref: '#/components/schemas/ThematicRepresentation-topics-search.get'
-    JobSmallRepresentation-topics-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-    Topic.CollectionTopicSearchRepresentation-topics-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        elements:
-          type: array
-          items:
-            $ref: '#/components/schemas/TopicRepresentation-topics-search.get'
-        currentPage:
-          type:
-          - integer
-          - 'null'
-        lastPage:
-          type:
-          - integer
-          - 'null'
-        itemsPerPage:
-          type:
-          - integer
-          - 'null'
-        totalItems:
-          type: integer
+        course:
+          $ref: '#/components/schemas/CourseRepresentation-topics-search.get'
     TopicCourseRepresentation-topics.get:
       type: object
       description: ''
@@ -939,6 +1039,17 @@ components:
       properties:
         course:
           $ref: '#/components/schemas/CourseRepresentation-topics.get'
+    Topic.TopicCountBySpaceAndJobRepresentation-topics.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        space:
+          type: string
+        jobCode:
+          type: string
+        countTopics:
+          type: integer
     TrainerRepresentation-topics.get:
       type: object
       description: ''
@@ -1076,99 +1187,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FundingRepresentation-topics-search.get'
-    Topic.TopicCountBySpaceAndJobRepresentation-topics.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        space:
-          type: string
-        jobCode:
-          type: string
-        countTopics:
-          type: integer
-    ProductRepresentation-topics.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        courseCode:
-          type:
-          - string
-          - 'null'
-        jobCode:
-          type:
-          - string
-          - 'null'
-        fundingCode:
-          type:
-          - string
-          - 'null'
-        price:
-          type: number
-        compensation:
-          type: number
-        status:
-          type: string
-    JobRepresentation-topics.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-        jobParent:
-          type:
-          - string
-          - 'null'
-        backgroundColor:
-          type:
-          - string
-          - 'null'
-        foregroundColor:
-          type:
-          - string
-          - 'null'
-        synapseColor:
-          type:
-          - string
-          - 'null'
-        jobSpaces:
-          type:
-          - array
-          - 'null'
-          items:
-            type: array
-            items:
-              type: string
-    ThematicRepresentation-topics-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        id:
-          type:
-          - integer
-          - 'null'
-        name:
-          type:
-          - string
-          - 'null'
-    FundingRepresentation-topics-search.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
     TopicRepresentation-topics-search.get:
       type: object
       description: ''
@@ -1206,24 +1224,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/TopicJobRepresentation-topics-search.get'
-    TopicJobRepresentation-topics.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        job:
-          $ref: '#/components/schemas/JobRepresentation-topics.get'
-    FundingRepresentation-topics.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
 x-refined-from:
 - santeacademie-connector-openapi.json
 - santeacademie-frontstage-openapi.json

@@ -48,6 +48,21 @@ components:
         estimatedTotalHits:
           type: integer
       type: object
+    PharmacySearchQuery:
+      properties:
+        query:
+          type:
+          - string
+          - 'null'
+        limit:
+          type:
+          - integer
+          - 'null'
+        offset:
+          type:
+          - integer
+          - 'null'
+      type: object
     PharmacySearchResultItem:
       properties:
         rs:
@@ -94,19 +109,4 @@ components:
           type: string
         libcategagretab:
           type: string
-      type: object
-    PharmacySearchQuery:
-      properties:
-        query:
-          type:
-          - string
-          - 'null'
-        limit:
-          type:
-          - integer
-          - 'null'
-        offset:
-          type:
-          - integer
-          - 'null'
       type: object
