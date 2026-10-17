@@ -70,62 +70,6 @@ paths:
       description: ''
 components:
   schemas:
-    TopicHit:
-      properties:
-        code:
-          type:
-          - string
-          - 'null'
-        name:
-          type: string
-        shortname:
-          type: string
-        jobs:
-          type: array
-          items:
-            type: string
-          example: '[''MED'', ''INF'']'
-        fundings:
-          type: array
-          items:
-            type: string
-          example: '[''DPC'', ''OPCO'']'
-        isQualifying:
-          type: boolean
-        hasEnabledTopicFormatRemoteElearning:
-          type: boolean
-        hasEnabledTopicFormatPhysicalClassroom:
-          type: boolean
-        hasEnabledTopicFormatVirtualClassroom:
-          type: boolean
-        hasEnabledTopicFormatBusiness:
-          type: boolean
-        hasEnabledTopicFormatBlendedLearning:
-          type: boolean
-        duration:
-          type:
-          - integer
-          - 'null'
-        isNew:
-          type: boolean
-        slug:
-          type: string
-        isEarlybird:
-          type: boolean
-        thumbnail:
-          type:
-          - string
-          - 'null'
-        rank:
-          type:
-          - integer
-          - 'null'
-        tag:
-          type:
-          - string
-          - 'null'
-      type: object
-      readOnly: true
     CustomCatalog:
       properties:
         pageName:
@@ -208,102 +152,62 @@ components:
           - 'null'
       type: object
       readOnly: true
-    CourseRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
+    TopicHit:
       properties:
-        externalCode:
+        code:
           type:
           - string
           - 'null'
         name:
-          type:
-          - string
-          - 'null'
-        shortName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
-        duration:
-          oneOf:
-          - type:
-            - integer
-            - 'null'
-          - type:
-            - number
-            - 'null'
-        format:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - string
-          - 'null'
-        presentationThumbnail:
-          type:
-          - string
-          - 'null'
-        presentationPortrait:
-          type:
-          - string
-          - 'null'
-        qualifying:
-          type: boolean
-        virtualClassroom:
-          type: boolean
-        ogImage:
-          type:
-          - string
-          - 'null'
-        refDpc:
-          type:
-          - string
-          - 'null'
-        videoTeaser:
-          type:
-          - string
-          - 'null'
-        videoPreview1:
-          type:
-          - string
-          - 'null'
-        videoPreview2:
-          type:
-          - string
-          - 'null'
-        videoPreview3:
-          type:
-          - string
-          - 'null'
-        videoPreview4:
-          type:
-          - string
-          - 'null'
-        spaces:
+          type: string
+        shortname:
+          type: string
+        jobs:
           type: array
           items:
             type: string
+          example: '[''MED'', ''INF'']'
         fundings:
           type: array
           items:
-            $ref: '#/components/schemas/FundingRepresentation-custom-catalogs.get'
-        trainers:
-          type: array
-          items:
-            $ref: '#/components/schemas/TrainerRepresentation-custom-catalogs.get'
-    CustomCatalogTopicRepresentation-custom-catalogs.get:
+            type: string
+          example: '[''DPC'', ''OPCO'']'
+        isQualifying:
+          type: boolean
+        hasEnabledTopicFormatRemoteElearning:
+          type: boolean
+        hasEnabledTopicFormatPhysicalClassroom:
+          type: boolean
+        hasEnabledTopicFormatVirtualClassroom:
+          type: boolean
+        hasEnabledTopicFormatBusiness:
+          type: boolean
+        hasEnabledTopicFormatBlendedLearning:
+          type: boolean
+        duration:
+          type:
+          - integer
+          - 'null'
+        isNew:
+          type: boolean
+        slug:
+          type: string
+        isEarlybird:
+          type: boolean
+        thumbnail:
+          type:
+          - string
+          - 'null'
+        rank:
+          type:
+          - integer
+          - 'null'
+        tag:
+          type:
+          - string
+          - 'null'
       type: object
-      description: ''
-      deprecated: false
-      properties:
-        topic:
-          $ref: '#/components/schemas/TopicRepresentation-custom-catalogs.get'
+      readOnly: true
     FaqRepresentation-custom-catalogs.get:
       type: object
       description: ''
@@ -319,13 +223,6 @@ components:
           type: boolean
         displayDrh:
           type: boolean
-    TopicJobRepresentation-custom-catalogs.get:
-      type: object
-      description: ''
-      deprecated: false
-      properties:
-        job:
-          $ref: '#/components/schemas/JobRepresentation-custom-catalogs.get'
     TopicCourseRepresentation-custom-catalogs.get:
       type: object
       description: ''
@@ -344,41 +241,20 @@ components:
           - 'null'
         name:
           type: string
-    JobRepresentation-custom-catalogs.get:
+    TopicJobRepresentation-custom-catalogs.get:
       type: object
       description: ''
       deprecated: false
       properties:
-        externalCode:
-          type:
-          - string
-          - 'null'
-        appellation:
-          type: string
-        jobParent:
-          type:
-          - string
-          - 'null'
-        backgroundColor:
-          type:
-          - string
-          - 'null'
-        foregroundColor:
-          type:
-          - string
-          - 'null'
-        synapseColor:
-          type:
-          - string
-          - 'null'
-        jobSpaces:
-          type:
-          - array
-          - 'null'
-          items:
-            type: array
-            items:
-              type: string
+        job:
+          $ref: '#/components/schemas/JobRepresentation-custom-catalogs.get'
+    CustomCatalogTopicRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        topic:
+          $ref: '#/components/schemas/TopicRepresentation-custom-catalogs.get'
     TrainerRepresentation-custom-catalogs.get:
       type: object
       description: ''
@@ -493,6 +369,130 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/FaqRepresentation-custom-catalogs.get'
+    CourseRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        name:
+          type:
+          - string
+          - 'null'
+        shortName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+        duration:
+          oneOf:
+          - type:
+            - integer
+            - 'null'
+          - type:
+            - number
+            - 'null'
+        format:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+        presentationThumbnail:
+          type:
+          - string
+          - 'null'
+        presentationPortrait:
+          type:
+          - string
+          - 'null'
+        qualifying:
+          type: boolean
+        virtualClassroom:
+          type: boolean
+        ogImage:
+          type:
+          - string
+          - 'null'
+        refDpc:
+          type:
+          - string
+          - 'null'
+        videoTeaser:
+          type:
+          - string
+          - 'null'
+        videoPreview1:
+          type:
+          - string
+          - 'null'
+        videoPreview2:
+          type:
+          - string
+          - 'null'
+        videoPreview3:
+          type:
+          - string
+          - 'null'
+        videoPreview4:
+          type:
+          - string
+          - 'null'
+        spaces:
+          type: array
+          items:
+            type: string
+        fundings:
+          type: array
+          items:
+            $ref: '#/components/schemas/FundingRepresentation-custom-catalogs.get'
+        trainers:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrainerRepresentation-custom-catalogs.get'
+    JobRepresentation-custom-catalogs.get:
+      type: object
+      description: ''
+      deprecated: false
+      properties:
+        externalCode:
+          type:
+          - string
+          - 'null'
+        appellation:
+          type: string
+        jobParent:
+          type:
+          - string
+          - 'null'
+        backgroundColor:
+          type:
+          - string
+          - 'null'
+        foregroundColor:
+          type:
+          - string
+          - 'null'
+        synapseColor:
+          type:
+          - string
+          - 'null'
+        jobSpaces:
+          type:
+          - array
+          - 'null'
+          items:
+            type: array
+            items:
+              type: string
     TopicRepresentation-custom-catalogs.get:
       type: object
       description: ''
