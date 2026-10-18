@@ -94,6 +94,8 @@ apis:
   humanURL: https://frontstage.santeacademie.com/api/docs.html
   baseURL: https://frontstage.santeacademie.com
   tags:
+  - Custom catalog
+  tags_raw:
   - CustomCatalog
   properties:
   - type: OpenAPI
